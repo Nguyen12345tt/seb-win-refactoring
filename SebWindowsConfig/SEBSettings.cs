@@ -924,7 +924,9 @@ namespace SebWindowsConfig
 				"synergyc.exe",
 				"tvnserver.exe",
 				"tvnviewer.exe",
-				"winvnc.exe"
+				"winvnc.exe",
+				"UltraViewer_Desktop.exe",
+				"UltraViewer_Service.exe"
 			};
 
 			// Default settings for group "Network - Filter"

@@ -187,6 +187,8 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "tv_x64.exe", OriginalName = "tv_x64.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "tvnserver.exe", OriginalName = "tvnserver.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "tvnviewer.exe", OriginalName = "tvnviewer.exe" });
+			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "UltraViewer_Desktop.exe", OriginalName = "UltraViewer_Desktop.exe" });
+			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "UltraViewer_Service.exe", OriginalName = "UltraViewer_Service.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "VLC.exe", OriginalName = "VLC.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "vncserver.exe", OriginalName = "vncserver.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "vncviewer.exe", OriginalName = "vncviewer.exe" });
