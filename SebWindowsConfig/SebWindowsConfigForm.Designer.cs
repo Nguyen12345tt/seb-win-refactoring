@@ -30,8 +30,8 @@ namespace SebWindowsConfig
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SebWindowsConfigForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.openFileDialogSebConfigFile = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialogSebConfigFile = new System.Windows.Forms.SaveFileDialog();
 			this.imageListTabIcons = new System.Windows.Forms.ImageList(this.components);
@@ -52,6 +52,7 @@ namespace SebWindowsConfig
 			this.checkBoxEnableF7 = new System.Windows.Forms.CheckBox();
 			this.checkBoxEnableF8 = new System.Windows.Forms.CheckBox();
 			this.groupBoxSpecialKeys = new System.Windows.Forms.GroupBox();
+			this.checkBoxEnableInjected = new System.Windows.Forms.CheckBox();
 			this.checkBoxEnableMiddleMouse = new System.Windows.Forms.CheckBox();
 			this.checkBoxEnableAltMouseWheel = new System.Windows.Forms.CheckBox();
 			this.checkBoxEnablePrintScreen = new System.Windows.Forms.CheckBox();
@@ -388,6 +389,7 @@ namespace SebWindowsConfig
 			this.checkBoxHideBrowserWindowToolbar = new System.Windows.Forms.CheckBox();
 			this.checkBoxShowMenuBar = new System.Windows.Forms.CheckBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.checkBoxShowVerificatorButton = new System.Windows.Forms.CheckBox();
 			this.checkBoxShowSideMenu = new System.Windows.Forms.CheckBox();
 			this.checkBoxShowTaskBar = new System.Windows.Forms.CheckBox();
 			this.checkboxAllowWlan = new System.Windows.Forms.CheckBox();
@@ -594,7 +596,7 @@ namespace SebWindowsConfig
 			// 
 			this.checkBoxHookKeys.AutoSize = true;
 			this.checkBoxHookKeys.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.checkBoxHookKeys.Location = new System.Drawing.Point(23, 268);
+			this.checkBoxHookKeys.Location = new System.Drawing.Point(18, 306);
 			this.checkBoxHookKeys.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
 			this.checkBoxHookKeys.Name = "checkBoxHookKeys";
 			this.checkBoxHookKeys.Size = new System.Drawing.Size(127, 17);
@@ -789,6 +791,7 @@ namespace SebWindowsConfig
 			// 
 			// groupBoxSpecialKeys
 			// 
+			this.groupBoxSpecialKeys.Controls.Add(this.checkBoxEnableInjected);
 			this.groupBoxSpecialKeys.Controls.Add(this.checkBoxEnableMiddleMouse);
 			this.groupBoxSpecialKeys.Controls.Add(this.checkBoxEnableAltMouseWheel);
 			this.groupBoxSpecialKeys.Controls.Add(this.checkBoxEnablePrintScreen);
@@ -803,11 +806,25 @@ namespace SebWindowsConfig
 			this.groupBoxSpecialKeys.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
 			this.groupBoxSpecialKeys.Name = "groupBoxSpecialKeys";
 			this.groupBoxSpecialKeys.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			this.groupBoxSpecialKeys.Size = new System.Drawing.Size(152, 242);
+			this.groupBoxSpecialKeys.Size = new System.Drawing.Size(152, 261);
 			this.groupBoxSpecialKeys.TabIndex = 39;
 			this.groupBoxSpecialKeys.TabStop = false;
 			this.groupBoxSpecialKeys.Text = "Special Keys";
 			this.toolTip1.SetToolTip(this.groupBoxSpecialKeys, "Settings to enable or block (hook) keys, key combinations and mouse buttons.");
+			// 
+			// checkBoxEnableInjected
+			// 
+			this.checkBoxEnableInjected.AutoSize = true;
+			this.checkBoxEnableInjected.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.checkBoxEnableInjected.Location = new System.Drawing.Point(8, 237);
+			this.checkBoxEnableInjected.Name = "checkBoxEnableInjected";
+			this.checkBoxEnableInjected.Size = new System.Drawing.Size(126, 17);
+			this.checkBoxEnableInjected.TabIndex = 10;
+			this.checkBoxEnableInjected.Text = "Enable Injected Keys";
+			this.toolTip1.SetToolTip(this.checkBoxEnableInjected, "Allows the injection of keyboard input which can be required for accessibility or" +
+        " remote control software.");
+			this.checkBoxEnableInjected.UseVisualStyleBackColor = true;
+			this.checkBoxEnableInjected.CheckedChanged += new System.EventHandler(this.checkBoxEnableInjected_CheckedChanged);
 			// 
 			// checkBoxEnableMiddleMouse
 			// 
@@ -1378,9 +1395,9 @@ namespace SebWindowsConfig
 			this.checkBoxSebServiceIgnore.AutoSize = true;
 			this.checkBoxSebServiceIgnore.Location = new System.Drawing.Point(14, 21);
 			this.checkBoxSebServiceIgnore.Name = "checkBoxSebServiceIgnore";
-			this.checkBoxSebServiceIgnore.Size = new System.Drawing.Size(119, 17);
+			this.checkBoxSebServiceIgnore.Size = new System.Drawing.Size(179, 17);
 			this.checkBoxSebServiceIgnore.TabIndex = 104;
-			this.checkBoxSebServiceIgnore.Text = "Ignore SEB Service";
+			this.checkBoxSebServiceIgnore.Text = "Enable SEB Service Component";
 			this.checkBoxSebServiceIgnore.UseVisualStyleBackColor = true;
 			this.checkBoxSebServiceIgnore.CheckedChanged += new System.EventHandler(this.checkBoxSebServiceIgnore_CheckedChanged);
 			// 
@@ -1408,13 +1425,13 @@ namespace SebWindowsConfig
 			// 
 			// labelSebServiceIgnore
 			// 
-			this.labelSebServiceIgnore.BackColor = System.Drawing.SystemColors.Window;
-			this.labelSebServiceIgnore.ForeColor = System.Drawing.Color.Red;
+			this.labelSebServiceIgnore.BackColor = System.Drawing.Color.Transparent;
+			this.labelSebServiceIgnore.ForeColor = System.Drawing.Color.Black;
 			this.labelSebServiceIgnore.Location = new System.Drawing.Point(12, 46);
 			this.labelSebServiceIgnore.Name = "labelSebServiceIgnore";
 			this.labelSebServiceIgnore.Size = new System.Drawing.Size(514, 42);
 			this.labelSebServiceIgnore.TabIndex = 105;
-			this.labelSebServiceIgnore.Text = resources.GetString("labelSebServiceIgnore.Text");
+			this.labelSebServiceIgnore.Text = "Recommended for BYOD scenarios.";
 			// 
 			// listBoxSebServicePolicy
 			// 
@@ -1818,10 +1835,10 @@ namespace SebWindowsConfig
 			this.radioCreateNewDesktop.Location = new System.Drawing.Point(18, 19);
 			this.radioCreateNewDesktop.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
 			this.radioCreateNewDesktop.Name = "radioCreateNewDesktop";
-			this.radioCreateNewDesktop.Size = new System.Drawing.Size(120, 17);
+			this.radioCreateNewDesktop.Size = new System.Drawing.Size(124, 17);
 			this.radioCreateNewDesktop.TabIndex = 82;
 			this.radioCreateNewDesktop.TabStop = true;
-			this.radioCreateNewDesktop.Text = "Create new desktop";
+			this.radioCreateNewDesktop.Text = "Create New Desktop";
 			this.toolTip1.SetToolTip(this.radioCreateNewDesktop, "This kiosk mode may prevent specific third party software to run correctly togeth" +
         "er with SEB, like some screen recording software or the Windows onscreen keyboar" +
         "d.");
@@ -2083,8 +2100,8 @@ namespace SebWindowsConfig
 			// 
 			// Type
 			// 
-			dataGridViewCellStyle9.BackColor = System.Drawing.Color.Silver;
-			this.Type.DefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
+			this.Type.DefaultCellStyle = dataGridViewCellStyle3;
 			this.Type.HeaderText = "Type";
 			this.Type.Name = "Type";
 			this.Type.ReadOnly = true;
@@ -4894,8 +4911,8 @@ namespace SebWindowsConfig
 			// spellCheckerDictionaryFilesColumn
 			// 
 			this.spellCheckerDictionaryFilesColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.spellCheckerDictionaryFilesColumn.DefaultCellStyle = dataGridViewCellStyle10;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.spellCheckerDictionaryFilesColumn.DefaultCellStyle = dataGridViewCellStyle4;
 			this.spellCheckerDictionaryFilesColumn.HeaderText = "Files";
 			this.spellCheckerDictionaryFilesColumn.Name = "spellCheckerDictionaryFilesColumn";
 			this.spellCheckerDictionaryFilesColumn.ReadOnly = true;
@@ -5077,6 +5094,7 @@ namespace SebWindowsConfig
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.checkBoxShowVerificatorButton);
 			this.groupBox5.Controls.Add(this.checkBoxShowSideMenu);
 			this.groupBox5.Controls.Add(this.checkBoxShowTaskBar);
 			this.groupBox5.Controls.Add(this.checkboxAllowWlan);
@@ -5092,10 +5110,22 @@ namespace SebWindowsConfig
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Taskbar / Dock / Side Menu";
 			// 
+			// checkBoxShowVerificatorButton
+			// 
+			this.checkBoxShowVerificatorButton.AutoSize = true;
+			this.checkBoxShowVerificatorButton.Location = new System.Drawing.Point(29, 40);
+			this.checkBoxShowVerificatorButton.Name = "checkBoxShowVerificatorButton";
+			this.checkBoxShowVerificatorButton.Size = new System.Drawing.Size(133, 17);
+			this.checkBoxShowVerificatorButton.TabIndex = 83;
+			this.checkBoxShowVerificatorButton.Text = "Show QR verify button";
+			this.toolTip1.SetToolTip(this.checkBoxShowVerificatorButton, "Shows button to display QR code for SEB Verificator");
+			this.checkBoxShowVerificatorButton.UseVisualStyleBackColor = true;
+			this.checkBoxShowVerificatorButton.CheckedChanged += new System.EventHandler(this.checkBoxShowVerificatorButton_CheckedChanged);
+			// 
 			// checkBoxShowSideMenu
 			// 
 			this.checkBoxShowSideMenu.AutoSize = true;
-			this.checkBoxShowSideMenu.Location = new System.Drawing.Point(10, 40);
+			this.checkBoxShowSideMenu.Location = new System.Drawing.Point(10, 60);
 			this.checkBoxShowSideMenu.Margin = new System.Windows.Forms.Padding(2);
 			this.checkBoxShowSideMenu.Name = "checkBoxShowSideMenu";
 			this.checkBoxShowSideMenu.Size = new System.Drawing.Size(104, 17);
@@ -6886,6 +6916,8 @@ namespace SebWindowsConfig
 		private System.Windows.Forms.TextBox lockscreenColorTextbox;
 		private System.Windows.Forms.Label label34;
 		private System.Windows.Forms.CheckBox checkBoxAllowStickyKeys;
+		private System.Windows.Forms.CheckBox checkBoxEnableInjected;
+		private System.Windows.Forms.CheckBox checkBoxShowVerificatorButton;
 	}
 }
 

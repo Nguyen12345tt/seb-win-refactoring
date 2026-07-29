@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -163,6 +163,11 @@ namespace SafeExamBrowser.UserInterface.Mobile
 		public ITaskview CreateTaskview()
 		{
 			return windowFactory.CreateTaskview();
+		}
+
+		public IVerificatorOverlay CreateVerificatorOverlay()
+		{
+			return windowFactory.CreateVerificatorOverlay();
 		}
 
 		private void InitializeFontAwesome()

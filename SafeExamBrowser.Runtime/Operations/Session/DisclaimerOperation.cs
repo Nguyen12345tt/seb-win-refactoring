@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,7 +25,7 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 		{
 			var result = OperationResult.Success;
 
-			if (Context.Next.Settings.Proctoring.ScreenProctoring.Enabled)
+			if (Context.Next.Settings.Proctoring.ScreenProctoring.Enabled && Context.Next.Settings.Proctoring.ShowDisclaimer)
 			{
 				result = ShowScreenProctoringDisclaimer();
 			}
@@ -37,7 +37,7 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 		{
 			var result = OperationResult.Success;
 
-			if (Context.Next.Settings.Proctoring.ScreenProctoring.Enabled)
+			if (Context.Next.Settings.Proctoring.ScreenProctoring.Enabled && Context.Next.Settings.Proctoring.ShowDisclaimer)
 			{
 				result = ShowScreenProctoringDisclaimer();
 			}

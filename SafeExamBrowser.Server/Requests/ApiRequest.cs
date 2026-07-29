@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -30,7 +30,7 @@ namespace SafeExamBrowser.Server.Requests
 
 		internal bool TryExecute(out Api api, out string message)
 		{
-			var success = TryExecute(HttpMethod.Get, settings.ApiUrl, out var response);
+			var success = TryExecute(HttpMethod.Get, settings.ApiEndpoint, out var response);
 
 			api = new Api();
 			message = response.ToLogString();

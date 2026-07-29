@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -146,7 +146,11 @@ namespace SafeExamBrowser.Monitoring.System.Components
 
 		private bool IsValidCursorPath(string path)
 		{
-			return path.StartsWith(USER_PATH, StringComparison.OrdinalIgnoreCase) || path.StartsWith(SYSTEM_PATH, StringComparison.OrdinalIgnoreCase);
+			var expanded = Environment.ExpandEnvironmentVariables(path);
+			var systemPath = expanded.StartsWith(SYSTEM_PATH, StringComparison.OrdinalIgnoreCase);
+			var userPath = expanded.StartsWith(USER_PATH, StringComparison.OrdinalIgnoreCase);
+
+			return systemPath || userPath;
 		}
 	}
 }

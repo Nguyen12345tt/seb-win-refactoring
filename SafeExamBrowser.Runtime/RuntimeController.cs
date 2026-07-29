@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -67,6 +67,7 @@ namespace SafeExamBrowser.Runtime
 				logger.Subscribe(runtimeWindow);
 
 				responsibilities.Delegate(RuntimeTask.StartSession);
+				responsibilities.Delegate(RuntimeTask.StartIntegrityMonitoring);
 			}
 			else
 			{
@@ -81,6 +82,7 @@ namespace SafeExamBrowser.Runtime
 
 		internal void Terminate()
 		{
+			responsibilities.Delegate(RuntimeTask.StopIntegrityMonitoring);
 			responsibilities.Delegate(RuntimeTask.DeregisterEvents);
 
 			if (SessionIsRunning)

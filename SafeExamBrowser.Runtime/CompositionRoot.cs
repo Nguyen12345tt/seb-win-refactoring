@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,17 +15,17 @@ using SafeExamBrowser.Communication.Hosts;
 using SafeExamBrowser.Communication.Proxies;
 using SafeExamBrowser.Configuration;
 using SafeExamBrowser.Configuration.Contracts;
-using SafeExamBrowser.Configuration.Contracts.Integrity;
 using SafeExamBrowser.Configuration.Cryptography;
 using SafeExamBrowser.Configuration.DataCompression;
 using SafeExamBrowser.Configuration.DataFormats;
 using SafeExamBrowser.Configuration.DataResources;
-using SafeExamBrowser.Configuration.Integrity;
 using SafeExamBrowser.Core.Contracts.OperationModel;
 using SafeExamBrowser.Core.Operations;
 using SafeExamBrowser.Core.ResponsibilityModel;
 using SafeExamBrowser.I18n;
 using SafeExamBrowser.I18n.Contracts;
+using SafeExamBrowser.Integrity;
+using SafeExamBrowser.Integrity.Contracts;
 using SafeExamBrowser.Logging;
 using SafeExamBrowser.Logging.Contracts;
 using SafeExamBrowser.Monitoring;
@@ -87,7 +87,7 @@ namespace SafeExamBrowser.Runtime
 
 			var bootstrapSequence = BuildBootstrapOperations(integrityModule, runtimeHost, splashScreen);
 			var sessionSequence = BuildSessionOperations(integrityModule, messageBox, registry, runtimeHost, runtimeWindow, serviceProxy, context, uiFactory);
-			var responsibilities = BuildResponsibilities(messageBox, runtimeHost, runtimeWindow, serviceProxy, context, sessionSequence, shutdown, splashScreen);
+			var responsibilities = BuildResponsibilities(integrityModule, messageBox, runtimeHost, runtimeWindow, serviceProxy, context, sessionSequence, shutdown, splashScreen);
 
 			context.Responsibilities = responsibilities;
 
@@ -106,6 +106,7 @@ namespace SafeExamBrowser.Runtime
 		}
 
 		private ResponsibilityCollection<RuntimeTask> BuildResponsibilities(
+			IIntegrityModule integrityModule,
 			IMessageBox messageBox,
 			IRuntimeHost runtimeHost,
 			IRuntimeWindow runtimeWindow,
@@ -120,6 +121,7 @@ namespace SafeExamBrowser.Runtime
 			responsibilities.Enqueue(new ClientResponsibility(ModuleLogger(nameof(ClientResponsibility)), messageBox, runtimeContext, runtimeWindow, shutdown));
 			responsibilities.Enqueue(new CommunicationResponsibility(ModuleLogger(nameof(CommunicationResponsibility)), runtimeContext, runtimeHost, shutdown));
 			responsibilities.Enqueue(new ErrorMessageResponsibility(appConfig, ModuleLogger(nameof(ErrorMessageResponsibility)), messageBox, runtimeContext, splashScreen, text));
+			responsibilities.Enqueue(new IntegrityResponsibility(integrityModule, ModuleLogger(nameof(IntegrityResponsibility)), runtimeContext, shutdown));
 			responsibilities.Enqueue(new ServiceResponsibility(ModuleLogger(nameof(ServiceResponsibility)), messageBox, runtimeContext, runtimeWindow, serviceProxy, shutdown));
 			responsibilities.Enqueue(new SessionResponsibility(appConfig, ModuleLogger(nameof(SessionResponsibility)), messageBox, runtimeContext, runtimeWindow, sessionSequence, shutdown, text));
 
@@ -151,7 +153,7 @@ namespace SafeExamBrowser.Runtime
 			var keyGenerator = new KeyGenerator(appConfig, integrityModule, ModuleLogger(nameof(KeyGenerator)));
 			var processFactory = new ProcessFactory(ModuleLogger(nameof(ProcessFactory)));
 			var proxyFactory = new ProxyFactory(new ProxyObjectFactory(), ModuleLogger(nameof(ProxyFactory)));
-			var remoteSessionDetector = new RemoteSessionDetector(ModuleLogger(nameof(RemoteSessionDetector)));
+			var remoteSessionDetector = new RemoteSessionDetector(integrityModule, ModuleLogger(nameof(RemoteSessionDetector)));
 			var sentinel = new SystemSentinel(ModuleLogger(nameof(SystemSentinel)), nativeMethods, registry);
 			var server = new ServerProxy(appConfig, keyGenerator, ModuleLogger(nameof(ServerProxy)), systemInfo, userInfo);
 			var virtualMachineDetector = new VirtualMachineDetector(integrityModule, ModuleLogger(nameof(VirtualMachineDetector)), registry, systemInfo);

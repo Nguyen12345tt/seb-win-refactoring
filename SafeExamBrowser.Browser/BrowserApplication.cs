@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using CefSharp;
+using CefSharp.WinForms;
 using SafeExamBrowser.Applications.Contracts.Events;
 using SafeExamBrowser.Browser.Contracts;
 using SafeExamBrowser.Browser.Contracts.Events;
@@ -109,9 +110,8 @@ namespace SafeExamBrowser.Browser
 
 			InitializeResponsibilities();
 
-			Responsibilities.Delegate(BrowserTask.InitializeBrowserConfiguration);
-
-			var success = Cef.Initialize(context.CefSettings, true, default(IApp));
+			var settings = Responsibilities.Delegate<CefSettings>(BrowserTask.InitializeBrowserConfiguration);
+			var success = Cef.Initialize(settings, true, default(IApp));
 
 			InitializeApplicationInfo();
 

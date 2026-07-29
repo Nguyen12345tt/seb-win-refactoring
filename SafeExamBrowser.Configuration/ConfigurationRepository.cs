@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -158,7 +158,7 @@ namespace SafeExamBrowser.Configuration
 			var hasKey = data.TryGetValue(Keys.ConfigurationFile.KeepClientConfigEncryption, out var value);
 			var useDefaultEncryption = value is bool keepEncryption && !keepEncryption;
 
-			if (!hasKey || (hasKey && useDefaultEncryption))
+			if (!hasKey || useDefaultEncryption)
 			{
 				encryption = new PasswordParameters { Password = string.Empty, IsHash = true };
 			}

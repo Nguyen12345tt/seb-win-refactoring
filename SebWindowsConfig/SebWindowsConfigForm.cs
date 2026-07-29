@@ -396,6 +396,7 @@ namespace SebWindowsConfig
 			checkBoxAllowAdditionalWindowAddressBar.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyNewBrowserWindowAllowAddressBar];
 			checkBoxAllowDeveloperConsole.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyAllowDeveloperConsole];
 			checkBoxAllowDeveloperConsole.Enabled = checkBoxEnableBrowserWindowToolbar.Checked;
+			checkBoxShowVerificatorButton.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyShowVerificatorButton];
 
 			var defaultText = "(part of application)";
 			var defaultStyle = new DataGridViewCellStyle { BackColor = Color.LightGray };
@@ -793,14 +794,14 @@ namespace SebWindowsConfig
 
 			// Group "Security"
 			listBoxSebServicePolicy.SelectedIndex = (int) SEBSettings.settingsCurrent[SEBSettings.KeySebServicePolicy];
-			checkBoxSebServiceIgnore.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeySebServiceIgnore];
-			labelSebServiceIgnore.Enabled = !checkBoxSebServiceIgnore.Checked;
-			labelSebServicePolicy.Enabled = !checkBoxSebServiceIgnore.Checked;
-			listBoxSebServicePolicy.Enabled = !checkBoxSebServiceIgnore.Checked;
-			groupBoxInsideSeb.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowWindowsUpdate.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowScreenSharing.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowChromeNotifications.Enabled = !checkBoxSebServiceIgnore.Checked;
+			checkBoxSebServiceIgnore.Checked = !(Boolean) SEBSettings.settingsCurrent[SEBSettings.KeySebServiceIgnore];
+			labelSebServiceIgnore.Enabled = checkBoxSebServiceIgnore.Checked;
+			labelSebServicePolicy.Enabled = checkBoxSebServiceIgnore.Checked;
+			listBoxSebServicePolicy.Enabled = checkBoxSebServiceIgnore.Checked;
+			groupBoxInsideSeb.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowWindowsUpdate.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowScreenSharing.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowChromeNotifications.Enabled = checkBoxSebServiceIgnore.Checked;
 			checkBoxAllowVirtualMachine.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyAllowVirtualMachine];
 			checkBoxAllowScreenSharing.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyAllowScreenSharing];
 			checkBoxEnablePrivateClipboard.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnablePrivateClipboard];
@@ -883,6 +884,7 @@ namespace SebWindowsConfig
 			checkBoxEnableRightMouse.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnableRightMouse];
 			checkBoxEnablePrintScreen.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnablePrintScreen];
 			checkBoxEnableAltMouseWheel.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnableAltMouseWheel];
+			checkBoxEnableInjected.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnableInjected];
 
 			checkBoxEnableF1.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnableF1];
 			checkBoxEnableF2.Checked = (Boolean) SEBSettings.settingsCurrent[SEBSettings.KeyEnableF2];
@@ -4639,14 +4641,14 @@ namespace SebWindowsConfig
 
 		private void checkBoxSebServiceIgnore_CheckedChanged(object sender, EventArgs e)
 		{
-			SEBSettings.settingsCurrent[SEBSettings.KeySebServiceIgnore] = checkBoxSebServiceIgnore.Checked;
-			labelSebServiceIgnore.Enabled = !checkBoxSebServiceIgnore.Checked;
-			labelSebServicePolicy.Enabled = !checkBoxSebServiceIgnore.Checked;
-			listBoxSebServicePolicy.Enabled = !checkBoxSebServiceIgnore.Checked;
-			groupBoxInsideSeb.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowWindowsUpdate.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowScreenSharing.Enabled = !checkBoxSebServiceIgnore.Checked;
-			checkBoxAllowChromeNotifications.Enabled = !checkBoxSebServiceIgnore.Checked;
+			SEBSettings.settingsCurrent[SEBSettings.KeySebServiceIgnore] = !checkBoxSebServiceIgnore.Checked;
+			labelSebServiceIgnore.Enabled = checkBoxSebServiceIgnore.Checked;
+			labelSebServicePolicy.Enabled = checkBoxSebServiceIgnore.Checked;
+			listBoxSebServicePolicy.Enabled = checkBoxSebServiceIgnore.Checked;
+			groupBoxInsideSeb.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowWindowsUpdate.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowScreenSharing.Enabled = checkBoxSebServiceIgnore.Checked;
+			checkBoxAllowChromeNotifications.Enabled = checkBoxSebServiceIgnore.Checked;
 		}
 
 		private void checkBoxAllowCustomDownloadLocation_CheckedChanged(object sender, EventArgs e)
@@ -4834,6 +4836,16 @@ namespace SebWindowsConfig
 		private void checkBoxAllowStickyKeys_CheckedChanged(object sender, EventArgs e)
 		{
 			SEBSettings.settingsCurrent[SEBSettings.KeyAllowStickyKeys] = checkBoxAllowStickyKeys.Checked;
+		}
+
+		private void checkBoxEnableInjected_CheckedChanged(object sender, EventArgs e)
+		{
+			SEBSettings.settingsCurrent[SEBSettings.KeyEnableInjected] = checkBoxEnableInjected.Checked;
+		}
+
+		private void checkBoxShowVerificatorButton_CheckedChanged(object sender, EventArgs e)
+		{
+			SEBSettings.settingsCurrent[SEBSettings.KeyShowVerificatorButton] = checkBoxShowVerificatorButton.Checked;
 		}
 	}
 }

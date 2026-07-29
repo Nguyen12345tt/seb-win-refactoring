@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,9 +8,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SafeExamBrowser.Client.Contracts;
 using SafeExamBrowser.Client.Responsibilities;
-using SafeExamBrowser.Configuration.Contracts.Integrity;
 using SafeExamBrowser.I18n.Contracts;
+using SafeExamBrowser.Integrity.Contracts;
 using SafeExamBrowser.Logging.Contracts;
 
 namespace SafeExamBrowser.Client.UnitTests.Responsibilities
@@ -25,15 +26,16 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 		public void Initialize()
 		{
 			var context = new ClientContext();
+			var coordinator = new Mock<ICoordinator>();
 			var logger = new Mock<ILogger>();
 			var valid = true;
 
 			text = new Mock<IText>();
 			integrityModule = new Mock<IIntegrityModule>();
 
-			integrityModule.Setup(m => m.TryVerifySessionIntegrity(It.IsAny<string>(), It.IsAny<string>(), out valid)).Returns(true);
+			integrityModule.Setup(m => m.TryVerifySessionIntegrity(It.IsAny<string>(), out valid)).Returns(true);
 
-			var sut = new IntegrityResponsibility(context, logger.Object, text.Object);
+			var sut = new IntegrityResponsibility(context, coordinator.Object, logger.Object, text.Object);
 		}
 	}
 }

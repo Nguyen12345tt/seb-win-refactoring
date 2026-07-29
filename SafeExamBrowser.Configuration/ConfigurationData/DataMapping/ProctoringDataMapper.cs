@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -59,6 +59,9 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 					break;
 				case Keys.Proctoring.ScreenProctoring.ServiceUrl:
 					MapServiceUrl(settings, value);
+					break;
+				case Keys.Proctoring.ShowDisclaimer:
+					MapShowDisclaimer(settings, value);
 					break;
 				case Keys.Proctoring.ShowTaskbarNotification:
 					MapShowTaskbarNotification(settings, value);
@@ -199,6 +202,14 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 			if (value is string url)
 			{
 				settings.Proctoring.ScreenProctoring.ServiceUrl = url;
+			}
+		}
+
+		private void MapShowDisclaimer(AppSettings settings, object value)
+		{
+			if (value is bool show)
+			{
+				settings.Proctoring.ShowDisclaimer = show;
 			}
 		}
 

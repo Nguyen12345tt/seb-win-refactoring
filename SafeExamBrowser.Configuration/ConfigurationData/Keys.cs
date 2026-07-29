@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -208,6 +208,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			internal const string EnableF10 = "enableF10";
 			internal const string EnableF11 = "enableF11";
 			internal const string EnableF12 = "enableF12";
+			internal const string EnableInjected = "enableInjected";
 			internal const string EnablePrintScreen = "enablePrintScreen";
 			internal const string EnableSystemKey = "enableStartMenu";
 		}
@@ -230,6 +231,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 
 		internal static class Proctoring
 		{
+			internal const string ShowDisclaimer = "showProctoringDisclaimer";
 			internal const string ShowTaskbarNotification = "showProctoringViewButton";
 
 			internal static class ScreenProctoring
@@ -277,7 +279,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 
 		internal static class Server
 		{
-			internal const string ApiUrl = "apiDiscovery";
+			internal const string ApiEndpoint = "apiDiscovery";
 			internal const string ClientName = "clientName";
 			internal const string ClientSecret = "clientSecret";
 			internal const string Configuration = "sebServerConfiguration";
@@ -366,6 +368,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			{
 				internal const string EnableTaskbar = "showTaskBar";
 				internal const string ShowApplicationLog = "showApplicationLogButton";
+				internal const string ShowVerificator = "showQRVerifyButton";
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -65,20 +65,30 @@ namespace SafeExamBrowser.WindowsApi.Contracts
 		bool EnableStickyKeys();
 
 		/// <summary>
+		/// Retrieves a collection of handles to all currently existing windows including those which are not interactive (e.g. not visible or not
+		/// having a title). See also the subset of <see cref="GetInteractiveWindows"/>.
+		/// </summary>
+		/// <exception cref="System.ComponentModel.Win32Exception">
+		/// If the existing windows could not be retrieved.
+		/// </exception>
+		IEnumerable<IntPtr> GetAllWindows();
+
+		/// <summary>
 		/// Retrieves the current position of the mouse cursor.
 		/// </summary>
 		(int x, int y) GetCursorPosition();
 
 		/// <summary>
-		/// Retrieves a collection of handles to all currently open (i.e. visible) windows.
+		/// Retrieves a collection of handles to all currently open interactive windows which are visible and have a title. See also the superset of
+		/// <see cref="GetAllWindows"/>.
 		/// </summary>
 		/// <exception cref="System.ComponentModel.Win32Exception">
 		/// If the open windows could not be retrieved.
 		/// </exception>
-		IEnumerable<IntPtr> GetOpenWindows();
+		IEnumerable<IntPtr> GetInteractiveWindows();
 
 		/// <summary>
-		/// Retrieves the process identifier for the specified window handle.
+		/// Retrieves the process identifier for the specified window.
 		/// </summary>
 		uint GetProcessIdFor(IntPtr window);
 
@@ -106,6 +116,11 @@ namespace SafeExamBrowser.WindowsApi.Contracts
 		IntPtr GetWindowIcon(IntPtr window);
 
 		/// <summary>
+		/// Retrieves the window style for the specified window.
+		/// </summary>
+		IWindowStyle GetWindowStyle(IntPtr window);
+
+		/// <summary>
 		/// Retrieves the title of the window with the given handle, or an empty string if the given window does not have a title.
 		/// </summary>
 		string GetWindowTitle(IntPtr window);
@@ -119,14 +134,25 @@ namespace SafeExamBrowser.WindowsApi.Contracts
 		IBounds GetWorkingArea();
 
 		/// <summary>
-		/// Determines whether this computer is connected to the internet. Returns <c>true</c> if successful, otherwise <c>false</c>.
+		/// Determines whether this computer is connected to the internet resp. a local network. Returns <c>true</c> if successful, otherwise <c>false</c>.
 		/// </summary>
+		[Obsolete("This native API has proven to be (at least partially) unreliable, consider using the Windows Runtime API instead when checking for an internet connection.")]
 		bool HasInternetConnection();
 
 		/// <summary>
 		/// Hides the given window. Returns <c>true</c> if successful, otherwise <c>false</c>.
 		/// </summary>
 		bool HideWindow(IntPtr window);
+
+		/// <summary>
+		/// Indicates whether a window with the given handle exists.
+		/// </summary>
+		bool IsExistingWindow(IntPtr window);
+
+		/// <summary>
+		/// Indicates whether the window with the given handle is minimized.
+		/// </summary>
+		bool IsMinimizedWindow(IntPtr window);
 
 		/// <summary>
 		/// Minimizes all open windows.

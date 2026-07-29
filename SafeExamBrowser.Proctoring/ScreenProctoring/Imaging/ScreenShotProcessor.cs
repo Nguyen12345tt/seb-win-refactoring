@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -145,11 +145,13 @@ namespace SafeExamBrowser.Proctoring.ScreenProctoring.Imaging
 		private void SerializeJpg(MemoryStream memoryStream)
 		{
 			var codec = ImageCodecInfo.GetImageEncoders().First(c => c.FormatID == System.Drawing.Imaging.ImageFormat.Jpeg.Guid);
-			var parameters = new EncoderParameters(1);
 			var quality = 100;
 
-			parameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-			bitmap.Save(memoryStream, codec, parameters);
+			using (var parameters = new EncoderParameters(1))
+			{
+				parameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+				bitmap.Save(memoryStream, codec, parameters);
+			}
 		}
 
 		private string ToReducedString()

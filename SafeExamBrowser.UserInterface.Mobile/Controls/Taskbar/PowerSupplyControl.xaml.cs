@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,11 +20,12 @@ namespace SafeExamBrowser.UserInterface.Mobile.Controls.Taskbar
 {
 	internal partial class PowerSupplyControl : UserControl, ISystemControl
 	{
+		private readonly IPowerSupply powerSupply;
+		private readonly IText text;
+
 		private Brush initialBrush;
 		private bool infoShown, warningShown;
 		private double maxWidth;
-		private IPowerSupply powerSupply;
-		private IText text;
 
 		internal PowerSupplyControl(IPowerSupply powerSupply, IText text)
 		{
@@ -74,7 +75,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Controls.Taskbar
 
 		private void UpdateStatus(IPowerSupplyStatus status)
 		{
-			var percentage = Math.Round(status.BatteryCharge * 100);
+			var percentage = Convert.ToInt32(Math.Round(status.BatteryCharge * 100));
 			var tooltip = string.Empty;
 
 			RenderCharge(status.BatteryCharge, status.BatteryChargeStatus);

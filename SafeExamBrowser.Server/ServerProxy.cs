@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -204,9 +204,10 @@ namespace SafeExamBrowser.Server
 		public void Initialize(ServerSettings settings)
 		{
 			this.settings = settings;
+			this.settings.ApiEndpoint = sanitizer.SanitizeApiEndpoint(settings.ApiEndpoint);
 
 			httpClient = new HttpClient();
-			httpClient.BaseAddress = sanitizer.Sanitize(settings.ServerUrl);
+			httpClient.BaseAddress = sanitizer.SanitizeBaseAddress(settings.ServerUrl);
 
 			if (settings.RequestTimeout > 0)
 			{

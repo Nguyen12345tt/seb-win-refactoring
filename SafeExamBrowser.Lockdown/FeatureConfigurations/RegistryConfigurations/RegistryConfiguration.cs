@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -18,8 +18,8 @@ namespace SafeExamBrowser.Lockdown.FeatureConfigurations.RegistryConfigurations
 	[Serializable]
 	internal abstract class RegistryConfiguration : FeatureConfiguration
 	{
-		private IList<RegistryDataItem> itemsToDelete;
-		private IList<RegistryDataItem> itemsToRestore;
+		private readonly IList<RegistryDataItem> itemsToDelete;
+		private readonly IList<RegistryDataItem> itemsToRestore;
 
 		protected abstract IEnumerable<RegistryConfigurationItem> Items { get; }
 		protected abstract RegistryKey RootKey { get; }
@@ -191,17 +191,17 @@ namespace SafeExamBrowser.Lockdown.FeatureConfigurations.RegistryConfigurations
 
 					using (var key = RootKey.OpenSubKey(keyWithoutRoot, true))
 					{
-						if (key.GetValue(item.Value) != null)
+						if (key?.GetValue(item.Value) != null)
 						{
 							key.DeleteValue(item.Value);
 							logger.Debug($"Successfully deleted registry item {item}.");
+							success = true;
 						}
 						else
 						{
 							logger.Debug($"No need to delete registry item {item} as it does not exist.");
+							success = true;
 						}
-
-						success = true;
 					}
 				}
 				else

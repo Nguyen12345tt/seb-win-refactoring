@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,5 +19,11 @@ namespace SafeExamBrowser.Core.Contracts.ResponsibilityModel
 		/// Delegates the given task to all responsibilities of the collection.
 		/// </summary>
 		void Delegate(T task);
+
+		/// <summary>
+		/// Delegates the given task with the requested return value type to all functional responsibilities of the collection.
+		/// Returns <c>default(TResult)</c> in case there is no responsibility which can assume the given task.
+		/// </summary>
+		TResult Delegate<TResult>(T task) where TResult : class;
 	}
 }

@@ -116,6 +116,7 @@ namespace SebWindowsConfig
 		public const String KeyZoomMode = "zoomMode";
 		public const String KeyShowReloadButton = "showReloadButton";
 		public const String KeyShowTime = "showTime";
+		public const String KeyShowVerificatorButton = "showQRVerifyButton";
 		public const String KeyShowInputLanguage = "showInputLanguage";
 		public const String KeyAllowDictionaryLookup = "allowDictionaryLookup";
 		public const String KeyEnableTouchExit = "enableTouchExit";
@@ -429,6 +430,7 @@ namespace SebWindowsConfig
 		public const String KeyEnableMiddleMouse = "enableMiddleMouse";
 		public const String KeyEnableRightMouse = "enableRightMouse";
 		public const String KeyEnableAltMouseWheel = "enableAltMouseWheel";
+		public const String KeyEnableInjected = "enableInjected";
 
 		// Group "Function Keys"
 		public const String KeyEnableF1 = "enableF1";
@@ -656,6 +658,7 @@ namespace SebWindowsConfig
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAdditionalDictionaries, new ListObj());
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyShowReloadButton, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyShowTime, true);
+			SEBSettings.settingsDefault.Add(SEBSettings.KeyShowVerificatorButton, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyShowInputLanguage, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnableTouchExit, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyOskBehavior, 2);
@@ -834,6 +837,10 @@ namespace SebWindowsConfig
 				"SkypeHost.exe",
 				"GotoMeetingWinStore.exe",
 				"TeamViewer.exe",
+				"TeamViewer_Desktop.exe",
+				"TeamViewer_Service.exe",
+				"tv_w32.exe",
+				"tv_x64.exe",
 				"vncserver.exe",
 				"vncviewer.exe",
 				"vncserverui.exe",
@@ -881,6 +888,45 @@ namespace SebWindowsConfig
 				"vlc.exe",
 				"sethc.exe",
 				"Guilded.exe",
+				"AnyDesk.exe",
+				"rustdesk.exe",
+				"remote_assistance_host.exe",
+				"remoting_native_messaging_host.exe",
+				"MouseWithoutBorders.exe",
+				"MouseWithoutBordersHelper.exe",
+				"mstsc.exe",
+				"ToDesk.exe",
+				"AA.exe",
+				"barrier.exe",
+				"ConnectWiseControl.Client.exe",
+				"dwagent.exe",
+				"g2ax_user.exe",
+				"ISLAlwaysOn.exe",
+				"ISLLight.exe",
+				"LogMeIn.exe",
+				"Loom.exe",
+				"Moonlight.exe",
+				"NinjaRMMAgent.exe",
+				"nxclient.exe",
+				"nxplayer.exe",
+				"parsecd.exe",
+				"quickassist.exe",
+				"Radmin.exe",
+				"rfusclient.exe",
+				"rserver3.exe",
+				"rutserv.exe",
+				"ScreenConnect.Client.exe",
+				"ScreenConnect.Service.exe",
+				"SplashtopStreamer.exe",
+				"Supremo.exe",
+				"SupremoHelper.exe",
+				"SupremoService.exe",
+				"synergyc.exe",
+				"tvnserver.exe",
+				"tvnviewer.exe",
+				"winvnc.exe",
+				"UltraViewer_Desktop.exe",
+				"UltraViewer_Service.exe"
 			};
 
 			// Default settings for group "Network - Filter"
@@ -1067,6 +1113,7 @@ namespace SebWindowsConfig
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnableRightMouse, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnablePrintScreen, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnableAltMouseWheel, false);
+			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnableInjected, false);
 
 			// Default settings for group "Function Keys"
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyEnableF1, true);

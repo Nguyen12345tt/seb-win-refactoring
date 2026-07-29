@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -66,6 +66,9 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 					break;
 				case Keys.Keyboard.EnableF12:
 					MapEnableF12(settings, value);
+					break;
+				case Keys.Keyboard.EnableInjected:
+					MapEnableInjected(settings, value);
 					break;
 				case Keys.Keyboard.EnablePrintScreen:
 					MapEnablePrintScreen(settings, value);
@@ -215,6 +218,14 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 			if (value is bool enabled)
 			{
 				settings.Keyboard.AllowF12 = enabled;
+			}
+		}
+
+		private void MapEnableInjected(AppSettings settings, object value)
+		{
+			if (value is bool enabled)
+			{
+				settings.Keyboard.AllowInjected = enabled;
 			}
 		}
 

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,6 +19,8 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 {
 	internal partial class ActionCenter : Window, IActionCenter
 	{
+		private bool IsPromoting { get; set; }
+
 		public bool ShowClock
 		{
 			set { Dispatcher.Invoke(() => Clock.Visibility = value ? Visibility.Visible : Visibility.Collapsed); }
@@ -98,9 +100,11 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 		{
 			Task.Run(() =>
 			{
+				IsPromoting = true;
 				Dispatcher.Invoke(ShowAnimated);
 				Thread.Sleep(2000);
 				Dispatcher.Invoke(HideAnimated);
+				IsPromoting = false;
 			});
 		}
 
@@ -159,7 +163,11 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 
 		private void ShowAnimation_Completed(object sender, EventArgs e)
 		{
-			Activate();
+			if (!IsPromoting)
+			{
+				Activate();
+			}
+
 			Deactivated += ActionCenter_Deactivated;
 		}
 

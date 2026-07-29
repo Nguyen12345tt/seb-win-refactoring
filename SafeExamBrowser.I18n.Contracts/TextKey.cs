@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -82,6 +82,7 @@ namespace SafeExamBrowser.I18n.Contracts
 		LockScreen_EaseOfAccessContinueOption,
 		LockScreen_EaseOfAccessMessage,
 		LockScreen_EaseOfAccessTerminateOption,
+		LockScreen_RuntimeIntegrityMessage,
 		LockScreen_SessionIntegrityMessage,
 		LockScreen_StickyKeysMessage,
 		LockScreen_StickyKeysContinueOption,
@@ -169,6 +170,10 @@ namespace SafeExamBrowser.I18n.Contracts
 		MessageBox_UnexpectedConfigurationErrorTitle,
 		MessageBox_UploadNotAllowed,
 		MessageBox_UploadNotAllowedTitle,
+		MessageBox_VerificatorActivationLimit,
+		MessageBox_VerificatorActivationLimitTitle,
+		MessageBox_VerificatorMissingInternet,
+		MessageBox_VerificatorMissingInternetTitle,
 		MessageBox_VersionRestrictionError,
 		MessageBox_VersionRestrictionErrorTitle,
 		MessageBox_VersionRestrictionMinimum,
@@ -187,6 +192,7 @@ namespace SafeExamBrowser.I18n.Contracts
 		Notification_ProctoringInactiveTooltip,
 		Notification_ProctoringLowerHand,
 		Notification_ProctoringRaiseHand,
+		Notification_VerificatorTooltip,
 		OperationStatus_CloseRuntimeConnection,
 		OperationStatus_FinalizeApplications,
 		OperationStatus_FinalizeClipboard,

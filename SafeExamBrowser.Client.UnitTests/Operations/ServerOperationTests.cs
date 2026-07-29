@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,6 +15,7 @@ using SafeExamBrowser.Logging.Contracts;
 using SafeExamBrowser.Server.Contracts;
 using SafeExamBrowser.Settings;
 using SafeExamBrowser.Settings.Server;
+using SafeExamBrowser.SystemComponents.Contracts;
 using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.Shell;
 
@@ -30,6 +31,7 @@ namespace SafeExamBrowser.Client.UnitTests.Operations
 		private Mock<ILogger> logger;
 		private Mock<IServerProxy> server;
 		private AppSettings settings;
+		private Mock<ISystemInfo> systemInfo;
 		private Mock<ITaskbar> taskbar;
 		private Mock<IUserInterfaceFactory> uiFactory;
 		private ServerOperation sut;
@@ -44,13 +46,14 @@ namespace SafeExamBrowser.Client.UnitTests.Operations
 			logger = new Mock<ILogger>();
 			server = new Mock<IServerProxy>();
 			settings = new AppSettings();
+			systemInfo = new Mock<ISystemInfo>();
 			taskbar = new Mock<ITaskbar>();
 			uiFactory = new Mock<IUserInterfaceFactory>();
 
 			context.AppConfig = appConfig;
 			context.Settings = settings;
 
-			sut = new ServerOperation(actionCenter.Object, context, invigilator.Object, logger.Object, server.Object, taskbar.Object, uiFactory.Object);
+			sut = new ServerOperation(actionCenter.Object, context, invigilator.Object, logger.Object, server.Object, systemInfo.Object, taskbar.Object, uiFactory.Object);
 		}
 
 		[TestMethod]

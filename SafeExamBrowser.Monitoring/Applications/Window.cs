@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,12 +13,16 @@ namespace SafeExamBrowser.Monitoring.Applications
 {
 	internal class Window : IWindow
 	{
+		internal bool IsMinimized { get; set; }
+		internal bool IsOverlay { get; set; }
+		internal bool IsVisible { get; set; }
+
 		public IntPtr Handle { get; set; }
 		public string Title { get; set; }
 
 		public override string ToString()
 		{
-			return $"'{Title}' ({Handle})";
+			return $"'{Title}' ({Handle}{(IsOverlay ? ", Overlay" : "")})";
 		}
 	}
 }

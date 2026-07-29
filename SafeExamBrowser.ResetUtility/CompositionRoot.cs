@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -49,7 +49,7 @@ namespace SafeExamBrowser.ResetUtility
 			logger?.Log($"# Application terminated at {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
 		}
 
-		private IList<MainMenuOption> BuildMainMenu(ProcedureContext context)
+		private IList<MainMenuOption> BuildMainMenu()
 		{
 			return new List<MainMenuOption>
 			{
@@ -72,7 +72,7 @@ namespace SafeExamBrowser.ResetUtility
 			context.ConfigurationFactory = new FeatureConfigurationFactory(new ModuleLogger(logger, nameof(FeatureConfigurationFactory)));
 			context.CreateBackup = CreateBackup;
 			context.Logger = logger;
-			context.MainMenu = BuildMainMenu(context);
+			context.MainMenu = BuildMainMenu();
 			context.Update = new SystemConfigurationUpdate(new ModuleLogger(logger, nameof(SystemConfigurationUpdate)));
 			context.UserInfo = new UserInfo(new ModuleLogger(logger, nameof(UserInfo)));
 		}

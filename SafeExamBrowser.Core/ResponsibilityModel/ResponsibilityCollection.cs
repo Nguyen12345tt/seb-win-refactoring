@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SafeExamBrowser.Core.Contracts.ResponsibilityModel;
 using SafeExamBrowser.Logging.Contracts;
 
@@ -16,7 +17,6 @@ namespace SafeExamBrowser.Core.ResponsibilityModel
 	/// <summary>
 	/// Default implementation of the <see cref="IResponsibilityCollection{T}"/>.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
 	public class ResponsibilityCollection<T> : IResponsibilityCollection<T>
 	{
 		protected ILogger logger;
@@ -41,6 +41,28 @@ namespace SafeExamBrowser.Core.ResponsibilityModel
 					logger.Error($"Caught unexpected exception while '{responsibility.GetType().Name}' was assuming task '{task}'!", e);
 				}
 			}
+		}
+
+		public TResult Delegate<TResult>(T task) where TResult : class
+		{
+			var result = default(TResult);
+
+			foreach (var responsibility in responsibilities.OfType<IFunctionalResponsibility<T>>())
+			{
+				try
+				{
+					if (responsibility.TryAssume(task, out result))
+					{
+						break;
+					}
+				}
+				catch (Exception e)
+				{
+					logger.Error($"Caught unexpected exception while '{responsibility.GetType().Name}' was assuming task '{task}' with return value type '{typeof(TResult).Name}'!", e);
+				}
+			}
+
+			return result;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -50,7 +50,7 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 			if (Context.Next.Settings.Service.DisableRemoteConnections && detector.IsRemoteSession())
 			{
 				result = OperationResult.Aborted;
-				Logger.Error("Detected remote session while SEB is not allowed to be run in a remote session! Aborting...");
+				Logger.Error("Detected remote session while SEB is not allowed to run in a remote session! Aborting...");
 				ShowMessageBox(TextKey.MessageBox_RemoteSessionNotAllowed, TextKey.MessageBox_RemoteSessionNotAllowedTitle, icon: MessageBoxIcon.Error);
 			}
 

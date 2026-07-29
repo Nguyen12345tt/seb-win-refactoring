@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -352,9 +352,9 @@ namespace SafeExamBrowser.Server
 				SessionId = attributesJson["screenProctoringClientSessionId"].Value<string>()
 			};
 
-			if (attributesJson.ContainsKey("screenProctoringEncryptSecret"))
+			if (attributesJson.TryGetValue("screenProctoringEncryptSecret", out var secret))
 			{
-				instruction.EncryptionSecret = attributesJson["screenProctoringEncryptSecret"].Value<string>();
+				instruction.EncryptionSecret = secret.Value<string>();
 			}
 
 			return instruction;

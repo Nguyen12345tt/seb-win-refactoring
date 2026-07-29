@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,12 +23,12 @@ using SafeExamBrowser.Communication.Contracts.Proxies;
 using SafeExamBrowser.Communication.Hosts;
 using SafeExamBrowser.Communication.Proxies;
 using SafeExamBrowser.Configuration.Cryptography;
-using SafeExamBrowser.Configuration.Integrity;
 using SafeExamBrowser.Core.Contracts.OperationModel;
 using SafeExamBrowser.Core.Operations;
 using SafeExamBrowser.Core.ResponsibilityModel;
 using SafeExamBrowser.I18n;
 using SafeExamBrowser.I18n.Contracts;
+using SafeExamBrowser.Integrity;
 using SafeExamBrowser.Logging;
 using SafeExamBrowser.Logging.Contracts;
 using SafeExamBrowser.Monitoring;
@@ -114,7 +114,7 @@ namespace SafeExamBrowser.Client
 			messageBox = BuildMessageBox();
 			nativeMethods = new NativeMethods();
 			applicationMonitor = new ApplicationMonitor(TWO_SECONDS, ModuleLogger(nameof(ApplicationMonitor)), nativeMethods, processFactory);
-			networkAdapter = new NetworkAdapter(ModuleLogger(nameof(NetworkAdapter)), nativeMethods);
+			networkAdapter = new NetworkAdapter(ModuleLogger(nameof(NetworkAdapter)));
 			splashScreen = uiFactory.CreateSplashScreen();
 			systemInfo = new SystemInfo(new Registry(ModuleLogger(nameof(Registry))));
 			taskbar = uiFactory.CreateTaskbar(ModuleLogger("Taskbar"));
@@ -198,7 +198,7 @@ namespace SafeExamBrowser.Client
 			responsibilities.Enqueue(new ApplicationsResponsibility(context, ModuleLogger(nameof(ApplicationsResponsibility))));
 			responsibilities.Enqueue(new BrowserResponsibility(context, coordinator, ModuleLogger(nameof(BrowserResponsibility)), messageBox, runtimeProxy, splashScreen, taskbar));
 			responsibilities.Enqueue(new CommunicationResponsibility(context, coordinator, ModuleLogger(nameof(CommunicationResponsibility)), messageBox, runtimeProxy, shutdown, splashScreen, text, uiFactory));
-			responsibilities.Enqueue(new IntegrityResponsibility(context, ModuleLogger(nameof(IntegrityResponsibility)), text));
+			responsibilities.Enqueue(new IntegrityResponsibility(context, coordinator, ModuleLogger(nameof(IntegrityResponsibility)), text));
 			responsibilities.Enqueue(new MonitoringResponsibility(actionCenter, applicationMonitor, context, coordinator, displayMonitor, explorerShell, ModuleLogger(nameof(MonitoringResponsibility)), sentinel, taskbar, text));
 			responsibilities.Enqueue(new NetworkResponsibility(context, ModuleLogger(nameof(NetworkResponsibility)), networkAdapter, text, uiFactory));
 			responsibilities.Enqueue(new ProctoringResponsibility(context, ModuleLogger(nameof(ProctoringResponsibility)), messageBox, uiFactory));
@@ -343,7 +343,7 @@ namespace SafeExamBrowser.Client
 			var keyGenerator = new KeyGenerator(context.AppConfig, context.IntegrityModule, ModuleLogger(nameof(KeyGenerator)));
 			var server = new ServerProxy(context.AppConfig, keyGenerator, ModuleLogger(nameof(ServerProxy)), systemInfo, userInfo, powerSupply, networkAdapter);
 			var invigilator = new Invigilator(ModuleLogger(nameof(Invigilator)), server);
-			var operation = new ServerOperation(actionCenter, context, invigilator, logger, server, taskbar, uiFactory);
+			var operation = new ServerOperation(actionCenter, context, invigilator, logger, server, systemInfo, taskbar, uiFactory);
 
 			context.Server = server;
 
@@ -356,6 +356,8 @@ namespace SafeExamBrowser.Client
 			var audio = new Audio(context.Settings.Audio, ModuleLogger(nameof(Audio)));
 			var keyboard = new Keyboard(ModuleLogger(nameof(Keyboard)));
 			var logNotification = new LogNotification(logger, text, uiFactory);
+			var verificator = new Verificator(context.AppConfig, context.IntegrityModule, ModuleLogger(nameof(Verificator)), messageBox, systemInfo, text, uiFactory);
+			var verificatorNotification = new VerificatorNotification(text, verificator);
 			var operation = new ShellOperation(
 				actionCenter,
 				audio,
@@ -371,13 +373,16 @@ namespace SafeExamBrowser.Client
 				taskbar,
 				taskview,
 				text,
-				uiFactory);
+				uiFactory,
+				verificator,
+				verificatorNotification);
 
 			context.Activators.Add(new ActionCenterKeyboardActivator(ModuleLogger(nameof(ActionCenterKeyboardActivator)), nativeMethods));
 			context.Activators.Add(new ActionCenterTouchActivator(ModuleLogger(nameof(ActionCenterTouchActivator)), nativeMethods));
 			context.Activators.Add(new TaskbarKeyboardActivator(ModuleLogger(nameof(TaskbarKeyboardActivator)), nativeMethods));
 			context.Activators.Add(new TaskviewKeyboardActivator(ModuleLogger(nameof(TaskviewKeyboardActivator)), nativeMethods));
 			context.Activators.Add(new TerminationActivator(ModuleLogger(nameof(TerminationActivator)), nativeMethods));
+			context.Activators.Add(new VerificatorActivator(ModuleLogger(nameof(VerificatorActivator)), nativeMethods));
 
 			return operation;
 		}

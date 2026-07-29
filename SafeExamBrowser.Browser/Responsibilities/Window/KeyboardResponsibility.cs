@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -56,7 +56,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 		{
 			Control.ExecuteJavaScript("document.activeElement.tagName", result =>
 			{
-				if (result.Result is string tagName && tagName?.ToUpper() == "BODY")
+				if (result.Result is string tagName && tagName.ToUpper() == "BODY")
 				{
 					// This means the user is now at the start of the focus / tabIndex chain in the website.
 					if (shiftPressed)

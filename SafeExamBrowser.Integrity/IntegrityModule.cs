@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,10 +13,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using SafeExamBrowser.Configuration.Contracts;
-using SafeExamBrowser.Configuration.Contracts.Integrity;
+using SafeExamBrowser.Integrity.Contracts;
 using SafeExamBrowser.Logging.Contracts;
 
-namespace SafeExamBrowser.Configuration.Integrity
+namespace SafeExamBrowser.Integrity
 {
 	public class IntegrityModule : IIntegrityModule
 	{
@@ -39,7 +39,6 @@ namespace SafeExamBrowser.Configuration.Integrity
 			0x01, 0x04, 0x02, 0x03, 0x14, 0x15, 0x07, 0x08,
 			0x11, 0x12, 0x16, 0x05, 0x09, 0x10, 0x12, 0x02
 		};
-		private static readonly string SESSION_DATA_SEPARATOR = "<@|--separator--|@>";
 
 		private readonly AppConfig appConfig;
 		private readonly ILogger logger;
@@ -50,9 +49,9 @@ namespace SafeExamBrowser.Configuration.Integrity
 			this.logger = logger;
 		}
 
-		public void CacheSession(string configurationKey, string startUrl)
+		public void CacheSession(string configurationKey)
 		{
-			if (TryReadSessionCache(out var sessions) && TryWriteSessionCache(sessions.Append((configurationKey, startUrl))))
+			if (TryReadSessionCache(out var sessions) && TryWriteSessionCache(sessions.Append(configurationKey)))
 			{
 				logger.Debug("Successfully cached session.");
 			}
@@ -62,9 +61,9 @@ namespace SafeExamBrowser.Configuration.Integrity
 			}
 		}
 
-		public void ClearSession(string configurationKey, string startUrl)
+		public void ClearSession(string configurationKey)
 		{
-			if (TryReadSessionCache(out var sessions) && TryWriteSessionCache(sessions.Where(s => s.configurationKey != configurationKey && s.startUrl != startUrl)))
+			if (TryReadSessionCache(out var sessions) && TryWriteSessionCache(sessions.Where(s => s != configurationKey)))
 			{
 				logger.Debug("Successfully cleared session.");
 			}
@@ -74,16 +73,36 @@ namespace SafeExamBrowser.Configuration.Integrity
 			}
 		}
 
+		public bool IsRemoteSession()
+		{
+			var isRemoteSession = false;
+
+			try
+			{
+				isRemoteSession = Native.IsRemoteSession();
+			}
+			catch (DllNotFoundException)
+			{
+				logger.Warn("Integrity module is not available!");
+			}
+			catch (Exception e)
+			{
+				logger.Error("Unexpected error while attempting to query remote session status!", e);
+			}
+
+			return isRemoteSession;
+		}
+
 		public bool IsVirtualMachine(out string manufacturer, out int probability)
 		{
-			var isVm = false;
+			var isVirtualMachine = false;
 
 			manufacturer = default;
 			probability = default;
 
 			try
 			{
-				isVm = IsVirtualMachine(out IntPtr bstr, out probability);
+				isVirtualMachine = Native.IsVirtualMachine(out var bstr, out probability);
 
 				if (bstr != IntPtr.Zero)
 				{
@@ -100,7 +119,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 				logger.Error("Unexpected error while attempting to query virtual machine information!", e);
 			}
 
-			return isVm;
+			return isVirtualMachine;
 		}
 
 		public bool TryCalculateAppSignatureKey(string connectionToken, string salt, out string appSignatureKey)
@@ -109,7 +128,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 
 			try
 			{
-				appSignatureKey = CalculateAppSignatureKey(connectionToken, salt);
+				appSignatureKey = Native.CalculateAppSignatureKey(connectionToken, salt);
 			}
 			catch (DllNotFoundException)
 			{
@@ -129,7 +148,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 
 			try
 			{
-				browserExamKey = CalculateBrowserExamKey(configurationKey, salt);
+				browserExamKey = Native.CalculateBrowserExamKey(configurationKey, salt);
 			}
 			catch (DllNotFoundException)
 			{
@@ -143,6 +162,34 @@ namespace SafeExamBrowser.Configuration.Integrity
 			return browserExamKey != default;
 		}
 
+		public bool TryGenerateVerificatorCode(string payload, out string code)
+		{
+			var success = false;
+
+			code = default;
+
+			try
+			{
+				success = Native.TryGenerateVerificatorCode(payload, out var bstr);
+
+				if (bstr != IntPtr.Zero)
+				{
+					code = Marshal.PtrToStringBSTR(bstr);
+					Marshal.FreeBSTR(bstr);
+				}
+			}
+			catch (DllNotFoundException)
+			{
+				logger.Warn("Integrity module is not available!");
+			}
+			catch (Exception e)
+			{
+				logger.Error("Unexpected error while attempting to generate verificator code!", e);
+			}
+
+			return success;
+		}
+
 		public bool TryVerifyCodeSignature(out bool isValid)
 		{
 			var success = false;
@@ -151,7 +198,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 
 			try
 			{
-				isValid = VerifyCodeSignature();
+				isValid = Native.VerifyCodeSignature();
 				success = true;
 			}
 			catch (DllNotFoundException)
@@ -166,7 +213,43 @@ namespace SafeExamBrowser.Configuration.Integrity
 			return success;
 		}
 
-		public bool TryVerifySessionIntegrity(string configurationKey, string startUrl, out bool isValid)
+		public bool TryVerifyRuntimeIntegrity(out bool isValid)
+		{
+			var success = false;
+
+			isValid = default;
+
+			try
+			{
+				isValid = Native.VerifyRuntimeIntegrity(out var data, out var count);
+
+				for (var index = 0; index < count; index++)
+				{
+					var pointer = Marshal.ReadIntPtr(data, index * IntPtr.Size);
+					var raw = Marshal.PtrToStringBSTR(pointer);
+					var item = string.Join(" ", raw.ToCharArray().Select(c => Convert.ToInt32(c)));
+
+					logger.Warn($"Runtime Integrity Violation #{index}: {item}");
+
+					Marshal.FreeBSTR(pointer);
+				}
+
+				Marshal.FreeCoTaskMem(data);
+				success = true;
+			}
+			catch (DllNotFoundException)
+			{
+				logger.Warn("Integrity module is not available!");
+			}
+			catch (Exception e)
+			{
+				logger.Error("Unexpected error while attempting to verify runtime integrity!", e);
+			}
+
+			return success;
+		}
+
+		public bool TryVerifySessionIntegrity(string configurationKey, out bool isValid)
 		{
 			var success = false;
 
@@ -174,7 +257,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 
 			if (TryReadSessionCache(out var sessions))
 			{
-				isValid = sessions.All(s => s.configurationKey != configurationKey && s.startUrl != startUrl);
+				isValid = sessions.All(s => s != configurationKey);
 				success = true;
 				logger.Debug($"Successfully verified session integrity, session is {(isValid ? "valid." : "compromised!")}");
 			}
@@ -186,11 +269,11 @@ namespace SafeExamBrowser.Configuration.Integrity
 			return success;
 		}
 
-		private bool TryReadSessionCache(out IList<(string configurationKey, string startUrl)> sessions)
+		private bool TryReadSessionCache(out IList<string> sessions)
 		{
 			var success = false;
 
-			sessions = new List<(string configurationKey, string startUrl)>();
+			sessions = new List<string>();
 
 			try
 			{
@@ -201,13 +284,9 @@ namespace SafeExamBrowser.Configuration.Integrity
 					using (var stream = new CryptoStream(file, aes.CreateDecryptor(SESSION_DATA_KEY, SESSION_DATA_IV), CryptoStreamMode.Read))
 					using (var reader = new StreamReader(stream))
 					{
-						for (var line = reader.ReadLine(); line != default; line = reader.ReadLine())
+						for (var session = reader.ReadLine(); session != default; session = reader.ReadLine())
 						{
-							var session = line.Split(new string[] { SESSION_DATA_SEPARATOR }, StringSplitOptions.None);
-							var configurationKey = session[0];
-							var startUrl = session[1];
-
-							sessions.Add((configurationKey, startUrl));
+							sessions.Add(session);
 						}
 					}
 				}
@@ -222,7 +301,7 @@ namespace SafeExamBrowser.Configuration.Integrity
 			return success;
 		}
 
-		private bool TryWriteSessionCache(IEnumerable<(string configurationKey, string startUrl)> sessions)
+		private bool TryWriteSessionCache(IEnumerable<string> sessions)
 		{
 			var success = false;
 
@@ -239,9 +318,9 @@ namespace SafeExamBrowser.Configuration.Integrity
 						using (var stream = new CryptoStream(file, aes.CreateEncryptor(), CryptoStreamMode.Write))
 						using (var writer = new StreamWriter(stream))
 						{
-							foreach (var (configurationKey, startUrl) in sessions)
+							foreach (var session in sessions)
 							{
-								writer.WriteLine($"{configurationKey}{SESSION_DATA_SEPARATOR}{startUrl}");
+								writer.WriteLine(session);
 							}
 						}
 					}
@@ -261,18 +340,30 @@ namespace SafeExamBrowser.Configuration.Integrity
 			return success;
 		}
 
-		[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string CalculateAppSignatureKey(string connectionToken, string salt);
+		private static class Native
+		{
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			[return: MarshalAs(UnmanagedType.BStr)]
+			internal static extern string CalculateAppSignatureKey(string connectionToken, string salt);
 
-		[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string CalculateBrowserExamKey(string configurationKey, string salt);
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			[return: MarshalAs(UnmanagedType.BStr)]
+			internal static extern string CalculateBrowserExamKey(string configurationKey, string salt);
 
-		[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool IsVirtualMachine(out IntPtr manufacturer, out int probability);
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			internal static extern bool IsRemoteSession();
 
-		[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool VerifyCodeSignature();
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			internal static extern bool IsVirtualMachine(out IntPtr manufacturer, out int probability);
+
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			internal static extern bool TryGenerateVerificatorCode(string payload, out IntPtr code);
+
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			internal static extern bool VerifyCodeSignature();
+
+			[DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+			internal static extern bool VerifyRuntimeIntegrity(out IntPtr data, out int count);
+		}
 	}
 }

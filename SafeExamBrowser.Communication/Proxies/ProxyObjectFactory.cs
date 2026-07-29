@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,7 +19,8 @@ namespace SafeExamBrowser.Communication.Proxies
 		public IProxyObject CreateObject(string address)
 		{
 			var endpoint = new EndpointAddress(address);
-			var channel = ChannelFactory<IProxyObject>.CreateChannel(new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport), endpoint);
+			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport) { MaxReceivedMessageSize = 1000000 };
+			var channel = ChannelFactory<IProxyObject>.CreateChannel(binding, endpoint);
 
 			return channel;
 		}

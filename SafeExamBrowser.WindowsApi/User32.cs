@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -60,6 +60,9 @@ namespace SafeExamBrowser.WindowsApi
 		internal static extern bool GetUserObjectInformation(IntPtr hObj, int nIndex, IntPtr pvInfo, int nLength, ref int lpnLengthNeeded);
 
 		[DllImport("user32.dll", SetLastError = true)]
+		internal static extern uint GetWindowLong(IntPtr hWnd, WindowLongFlags nIndex);
+
+		[DllImport("user32.dll", SetLastError = true)]
 		internal static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
 		[DllImport("user32.dll", SetLastError = true)]
@@ -70,6 +73,12 @@ namespace SafeExamBrowser.WindowsApi
 
 		[DllImport("user32.dll", SetLastError = true)]
 		internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		internal static extern bool IsIconic(IntPtr hWnd);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		internal static extern bool IsWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll", SetLastError = true)]
 		internal static extern bool IsWindowVisible(IntPtr hWnd);

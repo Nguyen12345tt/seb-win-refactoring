@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -50,5 +50,10 @@ namespace SafeExamBrowser.Settings.UserInterface
 		/// Determines whether the system control for the network is accessible via the taskbar.
 		/// </summary>
 		public bool ShowNetwork { get; set; }
+
+		/// <summary>
+		/// Determines whether the verificator functionality is accessible via the taskbar.
+		/// </summary>
+		public bool ShowVerificator { get; set; }
 	}
 }

@@ -1,12 +1,12 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-namespace SafeExamBrowser.Configuration.Contracts.Integrity
+namespace SafeExamBrowser.Integrity.Contracts
 {
 	/// <summary>
 	/// Provides functionality related to application integrity.
@@ -16,12 +16,17 @@ namespace SafeExamBrowser.Configuration.Contracts.Integrity
 		/// <summary>
 		/// Caches the specified session for later integrity verification.
 		/// </summary>
-		void CacheSession(string configurationKey, string startUrl);
+		void CacheSession(string configurationKey);
 
 		/// <summary>
 		/// Removes the specified session from the integrity verification cache.
 		/// </summary>
-		void ClearSession(string configurationKey, string startUrl);
+		void ClearSession(string configurationKey);
+
+		/// <summary>
+		/// Indicates whether the current user session is a remote session.
+		/// </summary>
+		bool IsRemoteSession();
 
 		/// <summary>
 		/// Indicates whether the computer system is a virtual machine and if so, provides its manufacturer and probability.
@@ -39,13 +44,23 @@ namespace SafeExamBrowser.Configuration.Contracts.Integrity
 		bool TryCalculateBrowserExamKey(string configurationKey, string salt, out string browserExamKey);
 
 		/// <summary>
+		/// Attempts to generate a verificator code.
+		/// </summary>
+		bool TryGenerateVerificatorCode(string payload, out string code);
+
+		/// <summary>
 		/// Attempts to verify the code signature.
 		/// </summary>
 		bool TryVerifyCodeSignature(out bool isValid);
 
 		/// <summary>
+		/// Attempts to verify the runtime integrity.
+		/// </summary>
+		bool TryVerifyRuntimeIntegrity(out bool isValid);
+
+		/// <summary>
 		/// Attempts to verify the integrity for the specified session.
 		/// </summary>
-		bool TryVerifySessionIntegrity(string configurationKey, string startUrl, out bool isValid);
+		bool TryVerifySessionIntegrity(string configurationKey, out bool isValid);
 	}
 }

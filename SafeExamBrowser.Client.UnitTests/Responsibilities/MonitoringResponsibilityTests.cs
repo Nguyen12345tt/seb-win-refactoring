@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 ETH Zürich, IT Services
+ * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -341,6 +341,7 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 		{
 			var lockScreen = new Mock<ILockScreen>();
 
+			coordinator.Setup(c => c.RequestSessionLock()).Returns(true);
 			displayMonitor.Setup(m => m.ValidateConfiguration(It.IsAny<DisplaySettings>())).Returns(new ValidationResult { IsAllowed = false });
 			lockScreen.Setup(l => l.WaitForResult()).Returns(new LockScreenResult());
 			uiFactory
@@ -349,6 +350,8 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 
 			displayMonitor.Raise(d => d.DisplayChanged += null);
 
+			coordinator.Verify(c => c.RequestSessionLock(), Times.Once);
+			coordinator.Verify(c => c.ReleaseSessionLock(), Times.Once);
 			lockScreen.Verify(l => l.Show(), Times.Once);
 		}
 
