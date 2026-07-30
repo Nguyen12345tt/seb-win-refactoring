@@ -59,12 +59,12 @@ namespace SafeExamBrowser.Client.UnitTests.Operations
 					new CheckResult
 					{
 						Category = "RAM",
-						Title = "Dung lượng RAM",
+						Title = "RAM Capacity",
 						Status = CheckStatus.Passed,
 						ActualValue = "8.00 GB",
 						RequiredValue = "≥ 4.00 GB",
 						IsCritical = true,
-						Message = "Dung lượng RAM đáp ứng tốt."
+						Message = "RAM capacity meets requirements."
 					}
 				}
 			};
@@ -73,7 +73,7 @@ namespace SafeExamBrowser.Client.UnitTests.Operations
 			var csv = generator.GenerateCsv(report);
 
 			Assert.IsTrue(csv.Contains("# Machine Name: TEST-PC"));
-			Assert.IsTrue(csv.Contains("RAM,Dung lượng RAM,Passed,8.00 GB"));
+			Assert.IsTrue(csv.Contains("RAM,RAM Capacity,Passed,8.00 GB"));
 		}
 
 		[TestMethod]
