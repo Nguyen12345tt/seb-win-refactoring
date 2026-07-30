@@ -27,7 +27,7 @@ namespace SafeExamBrowser.SystemComponents.PreExamCheck.Checkers
 		{
 			var os = systemInfo.OperatingSystem;
 			var osInfo = systemInfo.OperatingSystemInfo;
-			var isSupported = os == OperatingSystem.Windows10 || os == OperatingSystem.Windows11 || os == OperatingSystem.Windows8_1 || os == OperatingSystem.Windows7;
+			var isSupported = os == OperatingSystem.Windows10 || os == OperatingSystem.Windows11;
 
 			return new CheckResult
 			{
@@ -35,8 +35,8 @@ namespace SafeExamBrowser.SystemComponents.PreExamCheck.Checkers
 				Title = Name,
 				Status = isSupported ? CheckStatus.Passed : CheckStatus.Failed,
 				ActualValue = osInfo,
-				RequiredValue = "Windows 10 / Windows 11 / Windows 8.1 / Windows 7",
-				Message = isSupported ? "Operating system meets requirements." : "Windows 10, Windows 11, Windows 8.1, or Windows 7 is required.",
+				RequiredValue = "Windows 10 (v1803+) / Windows 11",
+				Message = isSupported ? "Operating system meets requirements." : "Windows 10 (version 1803 or higher) or Windows 11 is required.",
 				IsCritical = true
 			};
 		}
