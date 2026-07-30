@@ -1,131 +1,112 @@
-﻿<Project Sdk="WixToolset.Sdk/6.0.2">
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-		<OutputName>Setup</OutputName>
-		<OutputType>Package</OutputType>
-		<TargetName>$(OutputName)-$(Configuration)-$(Platform)</TargetName>
-		<NoWarn>HEAT5149</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-		<DefineConstants>Debug</DefineConstants>
-		<SuppressIces>ICE61</SuppressIces>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-		<SuppressIces>ICE61</SuppressIces>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<BinDir>bin\$(Platform)\$(Configuration)</BinDir>
-		<RuntimePath>$(SolutionDir)SafeExamBrowser.Runtime\$(BinDir)</RuntimePath>
-		<ConfigPath>$(SolutionDir)SebWindowsConfig\$(BinDir)</ConfigPath>
-		<ResetPath>$(SolutionDir)SafeExamBrowser.ResetUtility\$(BinDir)</ResetPath>
-		<ServicePath>$(SolutionDir)SafeExamBrowser.Service\$(BinDir)</ServicePath>
-
-		<SignOutput>false</SignOutput>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="WixToolset.UI.wixext" Version="6.0.2" />
-		<PackageReference Include="WixToolset.NetFx.wixext" Version="6.0.2" />
-		<PackageReference Include="WixToolset.Heat" Version="6.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<HarvestDirectory Include="$(RuntimePath)">
-			<ComponentGroupName>ApplicationComponents</ComponentGroupName>
-			<DirectoryRefId>ApplicationDirectory</DirectoryRefId>
-			<SuppressCom>true</SuppressCom>
-			<SuppressRegistry>true</SuppressRegistry>
-			<SuppressRootDirectory>true</SuppressRootDirectory>
-			<PreprocessorVariable>var.SafeExamBrowser.Runtime.TargetDir</PreprocessorVariable>
-			<Transforms>Components\Application.xslt</Transforms>
-		</HarvestDirectory>
-		<HarvestDirectory Include="$(ConfigPath)">
-			<ComponentGroupName>ConfigurationComponents</ComponentGroupName>
-			<DirectoryRefId>ConfigurationDirectory</DirectoryRefId>
-			<SuppressCom>true</SuppressCom>
-			<SuppressRegistry>true</SuppressRegistry>
-			<SuppressRootDirectory>true</SuppressRootDirectory>
-			<PreprocessorVariable>var.SebWindowsConfig.TargetDir</PreprocessorVariable>
-			<Transforms>Components\Configuration.xslt</Transforms>
-		</HarvestDirectory>
-		<HarvestDirectory Include="$(ResetPath)">
-			<ComponentGroupName>ResetComponents</ComponentGroupName>
-			<DirectoryRefId>ResetDirectory</DirectoryRefId>
-			<SuppressCom>true</SuppressCom>
-			<SuppressRegistry>true</SuppressRegistry>
-			<SuppressRootDirectory>true</SuppressRootDirectory>
-			<PreprocessorVariable>var.SafeExamBrowser.ResetUtility.TargetDir</PreprocessorVariable>
-			<Transforms>Components\Reset.xslt</Transforms>
-		</HarvestDirectory>
-		<HarvestDirectory Include="$(ServicePath)">
-			<ComponentGroupName>ServiceComponents</ComponentGroupName>
-			<DirectoryRefId>ServiceDirectory</DirectoryRefId>
-			<SuppressCom>true</SuppressCom>
-			<SuppressRegistry>true</SuppressRegistry>
-			<SuppressRootDirectory>true</SuppressRootDirectory>
-			<PreprocessorVariable>var.SafeExamBrowser.Service.TargetDir</PreprocessorVariable>
-			<Transforms>Components\Service.xslt</Transforms>
-		</HarvestDirectory>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Components" />
-		<Folder Include="Resources" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\SafeExamBrowser.Client\SafeExamBrowser.Client.csproj">
-			<Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
-		</ProjectReference>
-		<ProjectReference Include="..\SafeExamBrowser.ResetUtility\SafeExamBrowser.ResetUtility.csproj">
-			<Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
-		</ProjectReference>
-		<ProjectReference Include="..\SafeExamBrowser.Runtime\SafeExamBrowser.Runtime.csproj">
-			<Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
-		</ProjectReference>
-		<ProjectReference Include="..\SafeExamBrowser.Service\SafeExamBrowser.Service.csproj">
-			<Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
-		</ProjectReference>
-		<ProjectReference Include="..\SebWindowsConfig\SebWindowsConfig.csproj">
-			<Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
-		</ProjectReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Components\*.xslt" />
-		<Content Include="Resources\*.bmp" />
-		<Content Include="Resources\*.ico" />
-		<Content Include="Resources\License.rtf" />
-	</ItemGroup>
-
-	<Target Name="FindSignTool">
-		<PropertyGroup>
-			<WindowsKitsRoot>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot10', null, RegistryView.Registry32))</WindowsKitsRoot>
-			<WindowsKitsBinDir>$(WindowsKitsRoot)bin\</WindowsKitsBinDir>
-		</PropertyGroup>
-
-		<ItemGroup>
-			<SignToolArray Include="$(WindowsKitsBinDir)*\x64\signtool.exe" />
-		</ItemGroup>
-
-		<PropertyGroup>
-			<SignToolPath>@(SignToolArray->Last())</SignToolPath>
-		</PropertyGroup>
-
-		<Message Text="--- Auto-detected SignTool path: $(SignToolPath) ---" Importance="high" />
-	</Target>
-
-	<Target Name="SignCabs" Condition="'$(SignOutput)' == 'true'" DependsOnTargets="FindSignTool">
-		<Error Text="Could not find signtool.exe. Please ensure Windows SDK is installed via Visual Studio Installer." Condition="!Exists('$(SignToolPath)')" />
-		<Exec Command="&quot;$(SignToolPath)&quot; sign /sha1 ecac9df025f5d208f6190fc4d6f9d329576598c7 /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;%(SignCabs.FullPath)&quot;" />
-	</Target>
-
-	<Target Name="SignMsi" Condition="'$(SignOutput)' == 'true'" DependsOnTargets="FindSignTool">
-		<Error Text="Could not find signtool.exe. Please ensure Windows SDK is installed via Visual Studio Installer." Condition="!Exists('$(SignToolPath)')" />
-		<Exec Command="&quot;$(SignToolPath)&quot; sign /sha1 ecac9df025f5d208f6190fc4d6f9d329576598c7 /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 /d &quot;Safe Exam Browser&quot; &quot;%(SignMsi.FullPath)&quot;" />
-	</Target>
-
+﻿<Project Sdk="WixToolset.Sdk/7.0.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <OutputName>Setup</OutputName>
+    <OutputType>Package</OutputType>
+    <TargetName>$(OutputName)-$(Configuration)-$(Platform)</TargetName>
+    <NoWarn>HEAT5149</NoWarn>
+    <Platforms>x86;x64</Platforms>
+    <AcceptEula>wix7</AcceptEula>
+  </PropertyGroup>
+  <PropertyGroup>
+    <BinDir>bin\$(Platform)\$(Configuration)</BinDir>
+    <RuntimePath>$(SolutionDir)SafeExamBrowser.Runtime\$(BinDir)</RuntimePath>
+    <ConfigPath>$(SolutionDir)SebWindowsConfig\$(BinDir)</ConfigPath>
+    <ResetPath>$(SolutionDir)SafeExamBrowser.ResetUtility\$(BinDir)</ResetPath>
+    <ServicePath>$(SolutionDir)SafeExamBrowser.Service\$(BinDir)</ServicePath>
+    <SignOutput>false</SignOutput>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.NetFx.wixext" Version="7.0.0" />
+    <PackageReference Include="WixToolset.Heat" Version="6.0.2" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="7.0.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <HarvestDirectory Include="$(RuntimePath)">
+      <ComponentGroupName>ApplicationComponents</ComponentGroupName>
+      <DirectoryRefId>ApplicationDirectory</DirectoryRefId>
+      <SuppressCom>true</SuppressCom>
+      <SuppressRegistry>true</SuppressRegistry>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <PreprocessorVariable>var.SafeExamBrowser.Runtime.TargetDir</PreprocessorVariable>
+      <Transforms>Components\Application.xslt</Transforms>
+    </HarvestDirectory>
+    <HarvestDirectory Include="$(ConfigPath)">
+      <ComponentGroupName>ConfigurationComponents</ComponentGroupName>
+      <DirectoryRefId>ConfigurationDirectory</DirectoryRefId>
+      <SuppressCom>true</SuppressCom>
+      <SuppressRegistry>true</SuppressRegistry>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <PreprocessorVariable>var.SebWindowsConfig.TargetDir</PreprocessorVariable>
+      <Transforms>Components\Configuration.xslt</Transforms>
+    </HarvestDirectory>
+    <HarvestDirectory Include="$(ResetPath)">
+      <ComponentGroupName>ResetComponents</ComponentGroupName>
+      <DirectoryRefId>ResetDirectory</DirectoryRefId>
+      <SuppressCom>true</SuppressCom>
+      <SuppressRegistry>true</SuppressRegistry>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <PreprocessorVariable>var.SafeExamBrowser.ResetUtility.TargetDir</PreprocessorVariable>
+      <Transforms>Components\Reset.xslt</Transforms>
+    </HarvestDirectory>
+    <HarvestDirectory Include="$(ServicePath)">
+      <ComponentGroupName>ServiceComponents</ComponentGroupName>
+      <DirectoryRefId>ServiceDirectory</DirectoryRefId>
+      <SuppressCom>true</SuppressCom>
+      <SuppressRegistry>true</SuppressRegistry>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <PreprocessorVariable>var.SafeExamBrowser.Service.TargetDir</PreprocessorVariable>
+      <Transforms>Components\Service.xslt</Transforms>
+    </HarvestDirectory>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components" />
+    <Folder Include="Resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SafeExamBrowser.Client\SafeExamBrowser.Client.csproj">
+      <Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.ResetUtility\SafeExamBrowser.ResetUtility.csproj">
+      <Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.Runtime\SafeExamBrowser.Runtime.csproj">
+      <Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.Service\SafeExamBrowser.Service.csproj">
+      <Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\SebWindowsConfig\SebWindowsConfig.csproj">
+      <Properties>Configuration=$(Configuration);Platform=x64;RuntimeIdentifier=win-x64</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Components\*.xslt" />
+    <Content Include="Resources\*.bmp" />
+    <Content Include="Resources\*.ico" />
+    <Content Include="Resources\License.rtf" />
+  </ItemGroup>
+  <Target Name="FindSignTool">
+    <PropertyGroup>
+      <WindowsKitsRoot>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot10', null, RegistryView.Registry32))</WindowsKitsRoot>
+      <WindowsKitsBinDir>$(WindowsKitsRoot)bin\</WindowsKitsBinDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <SignToolArray Include="$(WindowsKitsBinDir)*\x64\signtool.exe" />
+    </ItemGroup>
+    <PropertyGroup>
+      <SignToolPath>@(SignToolArray-&gt;Last())</SignToolPath>
+    </PropertyGroup>
+    <Message Text="--- Auto-detected SignTool path: $(SignToolPath) ---" Importance="high" />
+  </Target>
+  <Target Name="SignCabs" Condition="'$(SignOutput)' == 'true'" DependsOnTargets="FindSignTool">
+    <Error Text="Could not find signtool.exe. Please ensure Windows SDK is installed via Visual Studio Installer." Condition="!Exists('$(SignToolPath)')" />
+    <Exec Command="&quot;$(SignToolPath)&quot; sign /sha1 ecac9df025f5d208f6190fc4d6f9d329576598c7 /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;%(SignCabs.FullPath)&quot;" />
+  </Target>
+  <Target Name="SignMsi" Condition="'$(SignOutput)' == 'true'" DependsOnTargets="FindSignTool">
+    <Error Text="Could not find signtool.exe. Please ensure Windows SDK is installed via Visual Studio Installer." Condition="!Exists('$(SignToolPath)')" />
+    <Exec Command="&quot;$(SignToolPath)&quot; sign /sha1 ecac9df025f5d208f6190fc4d6f9d329576598c7 /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 /d &quot;Safe Exam Browser&quot; &quot;%(SignMsi.FullPath)&quot;" />
+  </Target>
+	<Target Name="CollectSuggestedVisualStudioComponentIds" />
 </Project>

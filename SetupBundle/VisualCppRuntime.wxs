@@ -1,8 +1,8 @@
-﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
 	<Fragment>
 		<Variable Name="VisualCppMinimumVersion" Type="version" Value="14.44.35211.0" />
-		<util:ProductSearch Variable="VisualCppInstalledVersionX64" UpgradeCode="36F68A90-239C-34DF-B58C-64B30153CE35" Condition="VersionNT64" />
-		<util:ProductSearch Variable="VisualCppInstalledVersionX86" UpgradeCode="65E5BD06-6392-3027-8C26-853107D3CF1A" Condition="NOT VersionNT64" />
+		<util:ProductSearch Variable="VisualCppInstalledVersionX64" UpgradeCode="36F68A90-239C-34DF-B58C-64B30153CE35" Condition="VersionNT64" Result="version" />
+		<util:ProductSearch Variable="VisualCppInstalledVersionX86" UpgradeCode="65E5BD06-6392-3027-8C26-853107D3CF1A" Condition="NOT VersionNT64" Result="version" />
 
 		<PackageGroup Id="VisualCppRuntime">
 			<ExePackage DisplayName="Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.44.35211" Cache="remove" PerMachine="yes" Permanent="yes" Vital="yes" DetectCondition="VisualCppInstalledVersionX64 &gt;= VisualCppMinimumVersion" InstallCondition="VersionNT64" InstallArguments="/install /quiet /norestart" RepairArguments="/repair /quiet /norestart" UninstallArguments="/uninstall /quiet /norestart">
