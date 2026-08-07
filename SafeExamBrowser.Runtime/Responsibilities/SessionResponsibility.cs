@@ -131,21 +131,18 @@ namespace SafeExamBrowser.Runtime.Responsibilities
 
 		private void HandleSessionStartFailure()
 		{
-			var message = AppendLogFilePaths(appConfig, text.Get(TextKey.MessageBox_SessionStartError));
-			var title = text.Get(TextKey.MessageBox_SessionStartErrorTitle);
-
 			if (SessionIsRunning)
 			{
 				StopSession();
 
-				messageBox.Show(message, title, icon: MessageBoxIcon.Error, parent: runtimeWindow);
+				Context.Responsibilities.Delegate(RuntimeTask.ShowSessionStartError);
 
 				Logger.Info("Terminating application...");
 				shutdown.Invoke();
 			}
 			else
 			{
-				messageBox.Show(message, title, icon: MessageBoxIcon.Error, parent: runtimeWindow);
+				Context.Responsibilities.Delegate(RuntimeTask.ShowSessionStartError);
 			}
 		}
 

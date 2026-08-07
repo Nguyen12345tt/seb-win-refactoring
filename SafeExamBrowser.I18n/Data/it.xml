@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         È richiesta l'autenticazione di rete
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB non è riuscito ad avviare una nuova sessione! Si prega di consultare i file di registro per ulteriori informazioni.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Errore di avvio della sessione
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Si è verificato un errore imprevisto durante la procedura di spegnimento! Si prega di consultare i file di registro per ulteriori informazioni.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Errore di arresto
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Si è verificato un errore imprevisto durante la procedura di avvio! Si prega di consultare i file di registro per ulteriori informazioni.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Errore di avvio
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Annulla
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Servizio non disponibile
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB non è riuscito ad avviare una nuova sessione! Si prega di consultare i file di registro per ulteriori informazioni.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Errore di avvio della sessione
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Si è verificato un errore imprevisto durante la procedura di spegnimento! Si prega di consultare i file di registro per ulteriori informazioni.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Errore di arresto
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Si è verificato un errore imprevisto durante la procedura di avvio! Si prega di consultare i file di registro per ulteriori informazioni.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Errore di avvio
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Si è verificato un errore imprevisto durante il tentativo di caricare la risorsa di configurazione "%%URI%%"! Si prega di consultare i file di registro per ulteriori informazioni.

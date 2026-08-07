@@ -13,6 +13,8 @@ using SafeExamBrowser.Configuration.Contracts;
 using SafeExamBrowser.I18n.Contracts;
 using SafeExamBrowser.Logging.Contracts;
 using SafeExamBrowser.Runtime.Responsibilities;
+using SafeExamBrowser.SystemComponents.Contracts;
+using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.MessageBox;
 using SafeExamBrowser.UserInterface.Contracts.Windows;
 
@@ -23,10 +25,13 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 	{
 		private AppConfig appConfig;
 		private Mock<ILogger> logger;
+		private Mock<IMailClient> mailClient;
 		private Mock<IMessageBox> messageBox;
 		private RuntimeContext context;
+		private Mock<IRuntimeWindow> runtimeWindow;
 		private Mock<ISplashScreen> splashScreen;
 		private Mock<IText> text;
+		private Mock<IUserInterfaceFactory> uiFactory;
 
 		private ErrorMessageResponsibility sut;
 
@@ -41,14 +46,17 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 				ServiceLogFilePath = @"C:\Logs\Service.log"
 			};
 			logger = new Mock<ILogger>();
+			mailClient = new Mock<IMailClient>();
 			messageBox = new Mock<IMessageBox>();
 			context = new RuntimeContext();
+			runtimeWindow = new Mock<IRuntimeWindow>();
 			splashScreen = new Mock<ISplashScreen>();
 			text = new Mock<IText>();
+			uiFactory = new Mock<IUserInterfaceFactory>();
 
 			text.Setup(t => t.Get(It.IsAny<TextKey>())).Returns<TextKey>(key => key.ToString());
 
-			sut = new ErrorMessageResponsibility(appConfig, logger.Object, messageBox.Object, context, splashScreen.Object, text.Object);
+			sut = new ErrorMessageResponsibility(appConfig, logger.Object, mailClient.Object, context, runtimeWindow.Object, splashScreen.Object, text.Object, uiFactory.Object);
 		}
 
 		[TestMethod]
@@ -57,8 +65,8 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 			sut.Assume(RuntimeTask.ShowStartupError);
 
 			messageBox.Verify(m => m.Show(
-				It.Is<string>(message => message.Contains(TextKey.MessageBox_StartupError.ToString())),
-				It.Is<string>(title => title == TextKey.MessageBox_StartupErrorTitle.ToString()),
+				It.Is<string>(message => message.Contains(TextKey.ErrorDialog_StartupMessage.ToString())),
+				It.Is<string>(title => title == TextKey.ErrorDialog_StartupTitle.ToString()),
 				It.IsAny<MessageBoxAction>(),
 				It.Is<MessageBoxIcon>(icon => icon == MessageBoxIcon.Error),
 				It.IsAny<IWindow>()), Times.Once);
@@ -70,8 +78,8 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 			sut.Assume(RuntimeTask.ShowShutdownError);
 
 			messageBox.Verify(m => m.Show(
-				It.Is<string>(message => message.Contains(TextKey.MessageBox_ShutdownError.ToString())),
-				It.Is<string>(title => title == TextKey.MessageBox_ShutdownErrorTitle.ToString()),
+				It.Is<string>(message => message.Contains(TextKey.ErrorDialog_ShutdownMessage.ToString())),
+				It.Is<string>(title => title == TextKey.ErrorDialog_ShutdownTitle.ToString()),
 				It.IsAny<MessageBoxAction>(),
 				It.Is<MessageBoxIcon>(icon => icon == MessageBoxIcon.Error),
 				It.IsAny<IWindow>()), Times.Once);
@@ -108,8 +116,8 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 		{
 			sut.Assume(RuntimeTask.ShowStartupError);
 
-			text.Verify(t => t.Get(TextKey.MessageBox_StartupError), Times.Once);
-			text.Verify(t => t.Get(TextKey.MessageBox_StartupErrorTitle), Times.Once);
+			text.Verify(t => t.Get(TextKey.ErrorDialog_StartupMessage), Times.Once);
+			text.Verify(t => t.Get(TextKey.ErrorDialog_StartupTitle), Times.Once);
 		}
 
 		[TestMethod]
@@ -117,8 +125,8 @@ namespace SafeExamBrowser.Runtime.UnitTests.Responsibilities
 		{
 			sut.Assume(RuntimeTask.ShowShutdownError);
 
-			text.Verify(t => t.Get(TextKey.MessageBox_ShutdownError), Times.Once);
-			text.Verify(t => t.Get(TextKey.MessageBox_ShutdownErrorTitle), Times.Once);
+			text.Verify(t => t.Get(TextKey.ErrorDialog_ShutdownMessage), Times.Once);
+			text.Verify(t => t.Get(TextKey.ErrorDialog_ShutdownTitle), Times.Once);
 		}
 
 		[TestMethod]

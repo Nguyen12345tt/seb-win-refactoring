@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Authentification réseau requise
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        Le SEB n'a pas réussi à démarrer une nouvelle session! Veuillez consulter les fichiers journaux pour plus d'informations.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Erreur de démarrage de session
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Une erreur inattendue s'est produite lors de la procédure d'arrêt! Veuillez consulter les fichiers journaux pour plus d'informations.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Erreur de fermeture
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Une erreur inattendue s'est produite lors de la procédure de démarrage! Veuillez consulter les fichiers journaux pour plus d'informations.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Erreur de démarrage
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Annuler
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Service indisponible
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        Le SEB n'a pas réussi à démarrer une nouvelle session! Veuillez consulter les fichiers journaux pour plus d'informations.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Erreur de démarrage de session
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Une erreur inattendue s'est produite lors de la procédure d'arrêt! Veuillez consulter les fichiers journaux pour plus d'informations.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Erreur de fermeture
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Une erreur inattendue s'est produite lors de la procédure de démarrage! Veuillez consulter les fichiers journaux pour plus d'informations.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Erreur de démarrage
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Une erreur inattendue s'est produite en essayant de charger la ressource de configuration "%%URI%%"! Veuillez consulter les fichiers journaux pour plus d'informations.

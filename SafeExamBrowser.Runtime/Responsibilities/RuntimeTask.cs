@@ -34,6 +34,16 @@ namespace SafeExamBrowser.Runtime.Responsibilities
 		RegisterSessionEvents,
 
 		/// <summary>
+		/// Shows an error message in case the application crashed previously.
+		/// </summary>
+		ShowCrashMessage,
+
+		/// <summary>
+		/// Shows an error message in case the session initialization fails.
+		/// </summary>
+		ShowSessionStartError,
+
+		/// <summary>
 		/// Shows an error message in case the application shutdown fails.
 		/// </summary>
 		ShowShutdownError,

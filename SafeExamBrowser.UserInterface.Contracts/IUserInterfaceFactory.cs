@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
 using System.Collections.Generic;
 using SafeExamBrowser.Applications.Contracts;
 using SafeExamBrowser.Configuration.Contracts;
@@ -58,6 +59,11 @@ namespace SafeExamBrowser.UserInterface.Contracts
 		/// Creates a new browser window loaded with the given browser control and settings.
 		/// </summary>
 		IBrowserWindow CreateBrowserWindow(IBrowserControl control, BrowserSettings settings, bool isMainWindow, ILogger logger);
+
+		/// <summary>
+		/// Creates an error dialog with the given parameters.
+		/// </summary>
+		IErrorDialog CreateErrorDialog(TextKey message, TextKey title, Action sendMailCallback, bool showIgnoreCheckbox = false, params string[] logFiles);
 
 		/// <summary>
 		/// Creates a credentials dialog for the given purpose and with the specified message and title.

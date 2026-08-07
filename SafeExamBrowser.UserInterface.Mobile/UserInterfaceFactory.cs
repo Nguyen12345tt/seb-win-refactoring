@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Media;
 using FontAwesome.WPF;
@@ -78,6 +79,12 @@ namespace SafeExamBrowser.UserInterface.Mobile
 		public ICredentialsDialog CreateCredentialsDialog(CredentialsDialogPurpose purpose, string message, string title)
 		{
 			return windowFactory.CreateCredentialsDialog(purpose, message, title);
+		}
+
+		public IErrorDialog CreateErrorDialog(TextKey message, TextKey title, Action sendMailCallback, bool showIgnoreCheckbox = false, params string[] logFiles)
+		{
+			// TODO: Implement mobile dialog once layout is approved!
+			throw new NotImplementedException();
 		}
 
 		public IExamSelectionDialog CreateExamSelectionDialog(IEnumerable<Exam> exams)

@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
@@ -54,6 +55,11 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		internal ICredentialsDialog CreateCredentialsDialog(CredentialsDialogPurpose purpose, string message, string title)
 		{
 			return Application.Current.Dispatcher.Invoke(() => Guard(new CredentialsDialog(purpose, message, title, text)));
+		}
+
+		internal IErrorDialog CreateErrorDialog(TextKey message, TextKey title, Action sendMailCallback, bool showIgnoreCheckbox = false, params string[] logFiles)
+		{
+			return Application.Current.Dispatcher.Invoke(() => Guard(new ErrorDialog(message, title, sendMailCallback, showIgnoreCheckbox, text, logFiles)));
 		}
 
 		internal IExamSelectionDialog CreateExamSelectionDialog(IEnumerable<Exam> exams)

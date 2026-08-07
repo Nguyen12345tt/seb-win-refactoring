@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Netwerkverificatie vereist
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB is er niet in geslaagd een nieuwe sessie te starten! Raadpleeg de logbestanden voor meer informatie.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Sessie opstart fout
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Er is een onverwachte fout opgetreden tijdens de afsluitprocedure! Raadpleeg de logbestanden voor meer informatie.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Fout bij afsluiten
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Er is een onverwachte fout opgetreden tijdens de opstartprocedure! Raadpleeg de logbestanden voor meer informatie.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Opstart fout
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Annuleren
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Service niet beschikbaar
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB is er niet in geslaagd een nieuwe sessie te starten! Raadpleeg de logbestanden voor meer informatie.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Sessie opstart fout
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Er is een onverwachte fout opgetreden tijdens de afsluitprocedure! Raadpleeg de logbestanden voor meer informatie.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Fout bij afsluiten
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Er is een onverwachte fout opgetreden tijdens de opstartprocedure! Raadpleeg de logbestanden voor meer informatie.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Opstart fout
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Er is een onverwachte fout opgetreden tijdens het laden van configuratiebron "%%URI%%"! Raadpleeg de logbestanden voor meer informatie.

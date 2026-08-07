@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Ağ Kimlik Doğrulaması Gerekli
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB yeni bir oturum başlatamadı! Daha fazla bilgi için günlük dosyalarına bakın.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Oturum Başlatma Hatası
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Kapatma işlemi sırasında beklenmeyen bir hata oluştu! Daha fazla bilgi için günlük dosyalarına bakın.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Kapatma Hatası
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Başlatma işlemi sırasında beklenmeyen bir hata oluştu! Daha fazla bilgi için günlük dosyalarına bakın.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Başlatma Hatası
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         İptal
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Hizmet Kullanılamıyor
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB yeni bir oturum başlatamadı! Daha fazla bilgi için günlük dosyalarına bakın.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Oturum Başlatma Hatası
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Kapatma işlemi sırasında beklenmeyen bir hata oluştu! Daha fazla bilgi için günlük dosyalarına bakın.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Kapatma Hatası
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Başlatma işlemi sırasında beklenmeyen bir hata oluştu! Daha fazla bilgi için günlük dosyalarına bakın.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Başlatma Hatası
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         "%%URI%%" yapılandırma kaynağı yüklenirken beklenmeyen bir hata oluştu! Daha fazla bilgi için günlük dosyalarına bakın.

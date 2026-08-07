@@ -114,6 +114,39 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Netzwerk-Authentifizierung erforderlich
     </Entry>
+    <Entry key="ErrorDialog_CrashMessage">
+        SEB scheint bei einer früheren Sitzung abgestürzt zu sein. Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
+    </Entry>
+    <Entry key="ErrorDialog_CrashTitle">
+        Fehler bei vorhergehender Sitzung
+    </Entry>
+    <Entry key="ErrorDialog_IgnoreCrash">
+        Diese Meldung nicht mehr anzeigen
+    </Entry>
+    <Entry key="ErrorDialog_Ok">
+        OK
+    </Entry>
+    <Entry key="ErrorDialog_SendMail">
+        Log-Dateien via E-Mail senden
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB konnte keine neue Sitzung starten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Fehler beim Starten der Sitzung
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Beim Beenden ist ein unerwarteter Fehler aufgetreten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Fehler beim Beenden
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Beim Starten ist ein unerwarteter Fehler aufgetreten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Fehler beim Starten
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Abbrechen
     </Entry>
@@ -437,24 +470,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Service nicht verfügbar
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB konnte keine neue Sitzung starten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Fehler beim Starten der Sitzung
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Beim Beenden ist ein unerwarteter Fehler aufgetreten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Fehler beim Beenden
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Beim Starten ist ein unerwarteter Fehler aufgetreten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Fehler beim Starten
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Beim Laden der Konfigurations-Ressource "%%URI%%" ist ein unerwarteter Fehler aufgetreten! Bitte konsultieren Sie das Applikations-Protokoll für mehr Informationen.

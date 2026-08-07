@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Võrguautentimine nõutav
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB'il ei õnnestunud uut seanssi alustada! Lisateabe saamiseks vaata logifaile.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Seansi alustamise viga
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Sulgemistoimingu ajal ilmnes ootamatu tõrge! Lisateavet leiad logifailidest.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Sulgemise viga
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Käivitustoimingu ajal ilmnes ootamatu tõrge! Lisateavet leiad logifailidest.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Käivitamise viga
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Tühista
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Teenus ei ole kättesaadav
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB'il ei õnnestunud uut seanssi alustada! Lisateabe saamiseks vaata logifaile.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Seansi alustamise viga
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Sulgemistoimingu ajal ilmnes ootamatu tõrge! Lisateavet leiad logifailidest.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Sulgemise viga
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Käivitustoimingu ajal ilmnes ootamatu tõrge! Lisateavet leiad logifailidest.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Käivitamise viga
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Seadistusressursi "%%URI%%%" laadimisel tekkis ootamatu tõrge! Lisateabe saamiseks tutvu logifailidega.
