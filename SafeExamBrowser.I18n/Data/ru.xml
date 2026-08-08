@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Требуется сетевая аутентификация
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB не удалось запустить новый сеанс! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Ошибка запуска сеанса
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Во время процедуры завершения работы произошла непредвиденная ошибка! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Ошибка выключения
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Во время процедуры запуска произошла непредвиденная ошибка! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Ошибка запуска
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Отмена
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Услуга недоступна
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB не удалось запустить новый сеанс! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Ошибка запуска сеанса
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Во время процедуры завершения работы произошла непредвиденная ошибка! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Ошибка выключения
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Во время процедуры запуска произошла непредвиденная ошибка! Пожалуйста, обратитесь к файлам журнала для получения дополнительной информации.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Ошибка запуска
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Произошла непредвиденная ошибка при попытке загрузить конфигурационный ресурс "%%URI%%"! Пожалуйста, обратитесь к файлам журнала для получения дополнительной

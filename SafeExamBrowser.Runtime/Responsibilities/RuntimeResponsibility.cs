@@ -6,8 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-using System;
-using System.IO;
 using SafeExamBrowser.Configuration.Contracts;
 using SafeExamBrowser.Core.Contracts.ResponsibilityModel;
 using SafeExamBrowser.Logging.Contracts;
@@ -29,30 +27,5 @@ namespace SafeExamBrowser.Runtime.Responsibilities
 		}
 
 		public abstract void Assume(RuntimeTask task);
-
-		protected string AppendLogFilePaths(AppConfig appConfig, string message)
-		{
-			if (File.Exists(appConfig.BrowserLogFilePath))
-			{
-				message += $"{Environment.NewLine}{Environment.NewLine}{appConfig.BrowserLogFilePath}";
-			}
-
-			if (File.Exists(appConfig.ClientLogFilePath))
-			{
-				message += $"{Environment.NewLine}{Environment.NewLine}{appConfig.ClientLogFilePath}";
-			}
-
-			if (File.Exists(appConfig.RuntimeLogFilePath))
-			{
-				message += $"{Environment.NewLine}{Environment.NewLine}{appConfig.RuntimeLogFilePath}";
-			}
-
-			if (File.Exists(appConfig.ServiceLogFilePath))
-			{
-				message += $"{Environment.NewLine}{Environment.NewLine}{appConfig.ServiceLogFilePath}";
-			}
-
-			return message;
-		}
 	}
 }

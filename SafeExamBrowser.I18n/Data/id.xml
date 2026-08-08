@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Diperlukan Otentikasi Jaringan
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB gagal memulai sesi baru! Silakan lihat file log untuk informasi lebih lanjut.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Kesalahan Mulai Sesi
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Terjadi kesalahan yang tidak diharapkan selama prosedur penonaktifan! Silakan lihat file log untuk informasi lebih lanjut.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Kesalahan Penonaktifan
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Terjadi kesalahan yang tidak diharapkan selama prosedur pengaktifan! Silakan baca file log untuk informasi lebih lanjut.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Kesalahan Pengaktifan
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Batal
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Layanan Tidak Tersedia
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB gagal memulai sesi baru! Silakan lihat file log untuk informasi lebih lanjut.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Kesalahan Mulai Sesi
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Terjadi kesalahan yang tidak diharapkan selama prosedur penonaktifan! Silakan lihat file log untuk informasi lebih lanjut.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Kesalahan Penonaktifan
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Terjadi kesalahan yang tidak diharapkan selama prosedur pengaktifan! Silakan baca file log untuk informasi lebih lanjut.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Kesalahan Pengaktifan
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Terjadi kesalahan yang tidak diharapkan saat mencoba memuat sumber konfigurasi "%%URI%%"! Silakan baca file log untuk informasi lebih lanjut.

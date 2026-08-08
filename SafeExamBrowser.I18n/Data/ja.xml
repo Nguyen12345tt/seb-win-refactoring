@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         ネットワーク認証が必要です
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEBが新しいセッションを開始できませんでした！詳細はログファイルを確認してください。
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        セッション開始エラー
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        シャットダウン処理中に予期しないエラーが発生しました！詳細はログファイルを確認してください。
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        シャットダウンエラー
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        起動処理中に予期しないエラーが発生しました！詳細はログファイルを確認してください。
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        起動エラー
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         キャンセル
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         サービスを利用できません
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEBが新しいセッションを開始できませんでした！詳細はログファイルを確認してください。
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        セッション開始エラー
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        シャットダウン処理中に予期しないエラーが発生しました！詳細はログファイルを確認してください。
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        シャットダウンエラー
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        起動処理中に予期しないエラーが発生しました！詳細はログファイルを確認してください。
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        起動エラー
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         設定リソース ["%%URI%%"] の読み込み中に予期しないエラーが発生しました！詳細はログファイルを確認してください。

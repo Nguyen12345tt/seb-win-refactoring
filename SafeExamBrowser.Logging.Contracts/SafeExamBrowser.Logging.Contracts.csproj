@@ -63,6 +63,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICrashLog.cs" />
     <Compile Include="ILogContent.cs" />
     <Compile Include="ILogContentFormatter.cs" />
     <Compile Include="ILogger.cs" />

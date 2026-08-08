@@ -6,62 +6,159 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using SafeExamBrowser.Configuration.Contracts;
+using SafeExamBrowser.Core.Contracts.ResponsibilityModel;
 using SafeExamBrowser.I18n.Contracts;
 using SafeExamBrowser.Logging.Contracts;
-using SafeExamBrowser.UserInterface.Contracts.MessageBox;
+using SafeExamBrowser.SystemComponents.Contracts;
+using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.Windows;
+using SafeExamBrowser.UserInterface.Contracts.Windows.Data;
 
 namespace SafeExamBrowser.Runtime.Responsibilities
 {
-	internal class ErrorMessageResponsibility : RuntimeResponsibility
+	internal class ErrorMessageResponsibility : RuntimeResponsibility, IParameterizedResponsibility<RuntimeTask>
 	{
 		private readonly AppConfig appConfig;
-		private readonly IMessageBox messageBox;
+		private readonly IMailClient mailClient;
+		private readonly IRuntimeWindow runtimeWindow;
 		private readonly ISplashScreen splashScreen;
 		private readonly IText text;
+		private readonly IUserInterfaceFactory uiFactory;
 
 		internal ErrorMessageResponsibility(
 			AppConfig appConfig,
 			ILogger logger,
-			IMessageBox messageBox,
+			IMailClient mailClient,
 			RuntimeContext runtimeContext,
+			IRuntimeWindow runtimeWindow,
 			ISplashScreen splashScreen,
-			IText text) : base(logger, runtimeContext)
+			IText text,
+			IUserInterfaceFactory uiFactory) : base(logger, runtimeContext)
 		{
 			this.appConfig = appConfig;
-			this.messageBox = messageBox;
+			this.mailClient = mailClient;
+			this.runtimeWindow = runtimeWindow;
 			this.splashScreen = splashScreen;
 			this.text = text;
+			this.uiFactory = uiFactory;
 		}
 
 		public override void Assume(RuntimeTask task)
 		{
-			switch (task)
+			if (task == RuntimeTask.ShowSessionStartError || task == RuntimeTask.ShowShutdownError || task == RuntimeTask.ShowStartupError)
 			{
-				case RuntimeTask.ShowShutdownError:
-					ShowShutdownErrorMessage();
-					break;
-				case RuntimeTask.ShowStartupError:
-					ShowStartupErrorMessage();
-					break;
+				ShowErrorDialog(task);
 			}
 		}
 
-		private void ShowShutdownErrorMessage()
+		public bool TryAssume<TParam, TResult>(RuntimeTask task, TParam parameter, out TResult result) where TResult : class
 		{
-			var message = AppendLogFilePaths(appConfig, text.Get(TextKey.MessageBox_ShutdownError));
-			var title = text.Get(TextKey.MessageBox_ShutdownErrorTitle);
+			result = default;
 
-			messageBox.Show(message, title, icon: MessageBoxIcon.Error, parent: splashScreen);
+			if (task == RuntimeTask.ShowCrashMessage && parameter is string[] logFiles)
+			{
+				result = ShowErrorDialog(task, logFiles) as TResult;
+			}
+
+			return result != default;
 		}
 
-		private void ShowStartupErrorMessage()
+		private ErrorDialogResult ShowErrorDialog(RuntimeTask task, string[] logFiles = default)
 		{
-			var message = AppendLogFilePaths(appConfig, text.Get(TextKey.MessageBox_StartupError));
-			var title = text.Get(TextKey.MessageBox_StartupErrorTitle);
+			var (message, parent, showIgnoreCheckbox, title, type) = InitializeParameters(task);
+			logFiles = InitializeLogFiles(logFiles);
 
-			messageBox.Show(message, title, icon: MessageBoxIcon.Error, parent: splashScreen);
+			var body = $"<b>Application Information:</b>{appConfig.ProgramTitle}, Version {appConfig.ProgramInformationalVersion}, Build {appConfig.ProgramBuildVersion}"
+					   + $"<br /><b>Application Error Type:</b>{type}";
+			var subject = $"{appConfig.ProgramTitle} Log Files";
+			var sendLogFiles = new Action(() => mailClient.OpenDefault(subject, body, logFiles));
+
+			var dialog = uiFactory.CreateErrorDialog(message, title, sendLogFiles, showIgnoreCheckbox, logFiles);
+			var result = dialog.Show(parent);
+
+			return result;
+		}
+
+		private IEnumerable<string> CollectLogFiles()
+		{
+			if (File.Exists(appConfig.BrowserLogFilePath))
+			{
+				yield return appConfig.BrowserLogFilePath;
+			}
+
+			if (File.Exists(appConfig.ClientLogFilePath))
+			{
+				yield return appConfig.ClientLogFilePath;
+			}
+
+			if (File.Exists(appConfig.RuntimeLogFilePath))
+			{
+				yield return appConfig.RuntimeLogFilePath;
+			}
+
+			if (File.Exists(appConfig.ServiceLogFilePath))
+			{
+				yield return appConfig.ServiceLogFilePath;
+			}
+		}
+
+		private string[] InitializeLogFiles(string[] logFiles)
+		{
+			if (logFiles == default)
+			{
+				logFiles = CollectLogFiles().ToArray();
+			}
+			else
+			{
+				logFiles = logFiles.Where(f => File.Exists(f)).ToArray();
+			}
+
+			return logFiles;
+		}
+
+		private (TextKey message, IWindow parent, bool showIgnoreCheckbox, TextKey title, string type) InitializeParameters(RuntimeTask task)
+		{
+			var message = default(TextKey);
+			var parent = default(IWindow);
+			var showIgnoreCheckbox = false;
+			var title = default(TextKey);
+			var type = default(string);
+
+			switch (task)
+			{
+				case RuntimeTask.ShowCrashMessage:
+					message = TextKey.ErrorDialog_CrashMessage;
+					parent = splashScreen;
+					showIgnoreCheckbox = true;
+					title = TextKey.ErrorDialog_CrashTitle;
+					type = "Crash";
+					break;
+				case RuntimeTask.ShowSessionStartError:
+					message = TextKey.ErrorDialog_SessionStartMessage;
+					parent = runtimeWindow;
+					title = TextKey.ErrorDialog_SessionStartTitle;
+					type = "Session Start Error";
+					break;
+				case RuntimeTask.ShowShutdownError:
+					message = TextKey.ErrorDialog_ShutdownMessage;
+					parent = splashScreen;
+					title = TextKey.ErrorDialog_ShutdownTitle;
+					type = "Shutdown Error";
+					break;
+				case RuntimeTask.ShowStartupError:
+					message = TextKey.ErrorDialog_StartupMessage;
+					parent = splashScreen;
+					title = TextKey.ErrorDialog_StartupTitle;
+					type = "Startup Error";
+					break;
+			}
+
+			return (message, parent, showIgnoreCheckbox, title, type);
 		}
 	}
 }

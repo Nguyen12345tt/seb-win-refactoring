@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Autenticación de red necesaria
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB no ha podido iniciar una nueva sesión. Consulte los archivos de registro para obtener más información.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Error al iniciar la sesión
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Se ha producido un error inesperado durante el proceso de apagado. Consulte los archivos de registro para obtener más información.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Error de terminación
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Se ha producido un error inesperado durante el proceso de arranque. Consulte los archivos de registro para obtener más información.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Error de arranque
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Cancel
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Servicio no disponible
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB no ha podido iniciar una nueva sesión. Consulte los archivos de registro para obtener más información.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Error al iniciar la sesión
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Se ha producido un error inesperado durante el proceso de apagado. Consulte los archivos de registro para obtener más información.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Error de terminación
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Se ha producido un error inesperado durante el proceso de arranque. Consulte los archivos de registro para obtener más información.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Error de arranque
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Se ha producido un error inesperado al intentar cargar el recurso de configuración "%%URI%%". Consulte los archivos de registro para obtener más información.

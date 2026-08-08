@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         需要网络验证
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        防作弊考试专用浏览器启动新会话失败。请查阅日志文件以获取更多信息。
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        会话启动错误
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        关机过程中发生异常错误。请查阅日志文件以获取更多信息。
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        关机错误
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        启动过程中发生异常错误。请查阅日志文件以获取更多信息。
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        启动错误
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         取消
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         服务不可用
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        防作弊考试专用浏览器启动新会话失败。请查阅日志文件以获取更多信息。
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        会话启动错误
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        关机过程中发生异常错误。请查阅日志文件以获取更多信息。
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        关机错误
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        启动过程中发生异常错误。请查阅日志文件以获取更多信息。
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        启动错误
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         尝试加载配置资源"%%URI%%"时发生异常错误。请查阅日志文件以获取更多信息。

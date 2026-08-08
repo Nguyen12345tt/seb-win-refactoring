@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Nätverksautentisering krävs
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB misslyckades med att starta en ny session. Se loggfilerna för mer information.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Fel vid start av ny session
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        Ett oväntat fel inträffade under avstängningen. Se loggfilerna för mer information.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Fel vid avstängning
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        Ett oväntat fel inträffade under uppstarten! Se loggfilerna för mer information.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Fel vid start
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Avbryt
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Tjänsten är inte tillgänglig
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB misslyckades med att starta en ny session. Se loggfilerna för mer information.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Fel vid start av ny session
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        Ett oväntat fel inträffade under avstängningen. Se loggfilerna för mer information.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Fel vid avstängning
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        Ett oväntat fel inträffade under uppstarten! Se loggfilerna för mer information.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Fel vid start
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         Ett oväntat fel inträffade vid försök att ladda konfigurationsresursen "%%URI%%"! Se loggfilerna för mer information.

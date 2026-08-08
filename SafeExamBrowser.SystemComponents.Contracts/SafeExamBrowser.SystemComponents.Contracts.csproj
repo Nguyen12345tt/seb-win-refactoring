@@ -66,6 +66,7 @@
     <Compile Include="Audio\Events\VolumeChangedEventHandler.cs" />
     <Compile Include="Audio\IAudio.cs" />
     <Compile Include="IFileSystem.cs" />
+    <Compile Include="IMailClient.cs" />
     <Compile Include="Network\Events\CredentialsRequiredEventArgs.cs" />
     <Compile Include="Network\Events\CredentialsRequiredEventHandler.cs" />
     <Compile Include="Registry\Events\RegistryValueChangedEventHandler.cs" />

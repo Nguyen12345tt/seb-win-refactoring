@@ -114,6 +114,24 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Autentificare necesară
     </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB nu a reușit să pornească o nouă sesiune! Verificați jurnalele pentru mai multe informații.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Eroare la pornirea sesiunii
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        A apărut o eroare neașteptată în timpul procedurii de închidere! Verificați jurnalele pentru mai multe informații.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Eroare la închidere
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        A apărut o eroare neașteptată în timpul procedurii de pornire! Verificați jurnalele pentru mai multe informații.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Eroare la pornire
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Anulează
     </Entry>
@@ -437,24 +455,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Serviciu indisponibil
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB nu a reușit să pornească o nouă sesiune! Verificați jurnalele pentru mai multe informații.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Eroare la pornirea sesiunii
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        A apărut o eroare neașteptată în timpul procedurii de închidere! Verificați jurnalele pentru mai multe informații.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Eroare la închidere
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        A apărut o eroare neașteptată în timpul procedurii de pornire! Verificați jurnalele pentru mai multe informații.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Eroare la pornire
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         A apărut o eroare neașteptată în timpul încărcării sursei de configurare „%%URI%%”! Verificați jurnalele pentru mai multe informații.

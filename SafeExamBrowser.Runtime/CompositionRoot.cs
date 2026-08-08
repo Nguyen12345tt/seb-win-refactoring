@@ -72,33 +72,40 @@ namespace SafeExamBrowser.Runtime
 			InitializeLogging();
 			InitializeText();
 
-			var uiFactory = new UserInterfaceFactory(text);
-
 			var context = new RuntimeContext();
+			var crashLog = new CrashLog(appConfig, new FileSystem(), ModuleLogger(nameof(CrashLog)));
+			var factory = new UserInterfaceFactory(text);
 			var integrityModule = new IntegrityModule(appConfig, ModuleLogger(nameof(IntegrityModule)));
+			var mailClient = new MailClient(appConfig, ModuleLogger(nameof(MailClient)));
 			var messageBox = new MessageBoxFactory(text);
 			var registry = new Registry(ModuleLogger(nameof(Registry)));
 			var runtimeHost = new RuntimeHost(appConfig.RuntimeAddress, new HostObjectFactory(), ModuleLogger(nameof(RuntimeHost)), FIVE_SECONDS);
-			var runtimeWindow = uiFactory.CreateRuntimeWindow(appConfig);
+			var runtimeWindow = factory.CreateRuntimeWindow(appConfig);
 			var serviceProxy = new ServiceProxy(appConfig.ServiceAddress, new ProxyObjectFactory(), ModuleLogger(nameof(ServiceProxy)), Interlocutor.Runtime);
-			var splashScreen = uiFactory.CreateSplashScreen(appConfig);
+			var splashScreen = factory.CreateSplashScreen(appConfig);
 
 			systemInfo = new SystemInfo(registry);
 
-			var bootstrapSequence = BuildBootstrapOperations(integrityModule, runtimeHost, splashScreen);
-			var sessionSequence = BuildSessionOperations(integrityModule, messageBox, registry, runtimeHost, runtimeWindow, serviceProxy, context, uiFactory);
-			var responsibilities = BuildResponsibilities(integrityModule, messageBox, runtimeHost, runtimeWindow, serviceProxy, context, sessionSequence, shutdown, splashScreen);
+			var bootstrapSequence = BuildBootstrapOperations(crashLog, integrityModule, context, runtimeHost, splashScreen);
+			var sessionSequence = BuildSessionOperations(integrityModule, messageBox, registry, runtimeHost, runtimeWindow, serviceProxy, context, factory);
+			var responsibilities = BuildResponsibilities(integrityModule, mailClient, messageBox, context, runtimeHost, runtimeWindow, serviceProxy, sessionSequence, shutdown, splashScreen, factory);
 
 			context.Responsibilities = responsibilities;
 
 			RuntimeController = new RuntimeController(logger, bootstrapSequence, responsibilities, context, runtimeWindow, splashScreen);
 		}
 
-		private BootstrapOperationSequence BuildBootstrapOperations(IIntegrityModule integrityModule, IRuntimeHost runtimeHost, ISplashScreen splashScreen)
+		private BootstrapOperationSequence BuildBootstrapOperations(
+			ICrashLog crashLog,
+			IIntegrityModule integrityModule,
+			RuntimeContext runtimeContext,
+			IRuntimeHost runtimeHost,
+			ISplashScreen splashScreen)
 		{
 			var operations = new Queue<IOperation>();
 
 			operations.Enqueue(new I18nOperation(logger, text));
+			operations.Enqueue(new CrashLogOperation(appConfig, crashLog, logger, runtimeContext));
 			operations.Enqueue(new CommunicationHostOperation(runtimeHost, logger));
 			operations.Enqueue(new ApplicationIntegrityOperation(integrityModule, logger));
 
@@ -107,20 +114,22 @@ namespace SafeExamBrowser.Runtime
 
 		private ResponsibilityCollection<RuntimeTask> BuildResponsibilities(
 			IIntegrityModule integrityModule,
+			IMailClient mailClient,
 			IMessageBox messageBox,
+			RuntimeContext runtimeContext,
 			IRuntimeHost runtimeHost,
 			IRuntimeWindow runtimeWindow,
 			IServiceProxy serviceProxy,
-			RuntimeContext runtimeContext,
 			SessionOperationSequence sessionSequence,
 			Action shutdown,
-			ISplashScreen splashScreen)
+			ISplashScreen splashScreen,
+			IUserInterfaceFactory factory)
 		{
 			var responsibilities = new Queue<RuntimeResponsibility>();
 
 			responsibilities.Enqueue(new ClientResponsibility(ModuleLogger(nameof(ClientResponsibility)), messageBox, runtimeContext, runtimeWindow, shutdown));
 			responsibilities.Enqueue(new CommunicationResponsibility(ModuleLogger(nameof(CommunicationResponsibility)), runtimeContext, runtimeHost, shutdown));
-			responsibilities.Enqueue(new ErrorMessageResponsibility(appConfig, ModuleLogger(nameof(ErrorMessageResponsibility)), messageBox, runtimeContext, splashScreen, text));
+			responsibilities.Enqueue(new ErrorMessageResponsibility(appConfig, ModuleLogger(nameof(ErrorMessageResponsibility)), mailClient, runtimeContext, runtimeWindow, splashScreen, text, factory));
 			responsibilities.Enqueue(new IntegrityResponsibility(integrityModule, ModuleLogger(nameof(IntegrityResponsibility)), runtimeContext, shutdown));
 			responsibilities.Enqueue(new ServiceResponsibility(ModuleLogger(nameof(ServiceResponsibility)), messageBox, runtimeContext, runtimeWindow, serviceProxy, shutdown));
 			responsibilities.Enqueue(new SessionResponsibility(appConfig, ModuleLogger(nameof(SessionResponsibility)), messageBox, runtimeContext, runtimeWindow, sessionSequence, shutdown, text));
@@ -136,7 +145,7 @@ namespace SafeExamBrowser.Runtime
 			IRuntimeWindow runtimeWindow,
 			IServiceProxy serviceProxy,
 			RuntimeContext runtimeContext,
-			IUserInterfaceFactory uiFactory)
+			IUserInterfaceFactory factory)
 		{
 			var args = Environment.GetCommandLineArgs();
 			var fileSystem = new FileSystem();
@@ -159,8 +168,8 @@ namespace SafeExamBrowser.Runtime
 			var virtualMachineDetector = new VirtualMachineDetector(integrityModule, ModuleLogger(nameof(VirtualMachineDetector)), registry, systemInfo);
 
 			operations.Enqueue(new SessionInitializationOperation(dependencies, fileSystem, repository));
-			operations.Enqueue(new ConfigurationOperation(args, dependencies, new FileSystem(), new HashAlgorithm(), repository, uiFactory));
-			operations.Enqueue(new ServerOperation(dependencies, fileSystem, repository, server, uiFactory));
+			operations.Enqueue(new ConfigurationOperation(args, dependencies, new FileSystem(), new HashAlgorithm(), repository, factory));
+			operations.Enqueue(new ServerOperation(dependencies, fileSystem, repository, server, factory));
 			operations.Enqueue(new VersionRestrictionOperation(dependencies));
 			operations.Enqueue(new DisclaimerOperation(dependencies));
 			operations.Enqueue(new RemoteSessionOperation(dependencies, remoteSessionDetector));

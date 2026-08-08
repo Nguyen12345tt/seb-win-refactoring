@@ -64,5 +64,27 @@ namespace SafeExamBrowser.Core.ResponsibilityModel
 
 			return result;
 		}
+
+		public TResult Delegate<TParam, TResult>(T task, TParam parameter) where TResult : class
+		{
+			var result = default(TResult);
+
+			foreach (var responsibility in responsibilities.OfType<IParameterizedResponsibility<T>>())
+			{
+				try
+				{
+					if (responsibility.TryAssume(task, parameter, out result))
+					{
+						break;
+					}
+				}
+				catch (Exception e)
+				{
+					logger.Error($"Caught unexpected exception while '{responsibility.GetType().Name}' was assuming task '{task}' with parameter '{parameter}' and return value type '{typeof(TResult).Name}'!", e);
+				}
+			}
+
+			return result;
+		}
 	}
 }

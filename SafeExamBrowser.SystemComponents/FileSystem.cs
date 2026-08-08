@@ -31,9 +31,26 @@ namespace SafeExamBrowser.SystemComponents
 			}
 		}
 
+		public bool Exists(string path)
+		{
+			return Directory.Exists(path) || File.Exists(path);
+		}
+
 		public void Save(string content, string path)
 		{
 			File.WriteAllText(path, content);
+		}
+
+		public bool TryRead(string path, out string content)
+		{
+			content = default;
+
+			if (File.Exists(path))
+			{
+				content = File.ReadAllText(path);
+			}
+
+			return content != default;
 		}
 	}
 }

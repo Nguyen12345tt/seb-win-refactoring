@@ -79,6 +79,7 @@
     <Compile Include="Resources\Icons\IconResource.cs" />
     <Compile Include="Resources\Icons\NativeIconResource.cs" />
     <Compile Include="Resources\Icons\XamlIconResource.cs" />
+    <Compile Include="ResponsibilityModel\IParameterizedResponsibility.cs" />
     <Compile Include="ResponsibilityModel\IResponsibility.cs" />
     <Compile Include="ResponsibilityModel\IResponsibilityCollection.cs" />
     <Compile Include="ResponsibilityModel\IFunctionalResponsibility.cs" />

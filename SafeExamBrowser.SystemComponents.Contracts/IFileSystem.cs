@@ -24,6 +24,16 @@ namespace SafeExamBrowser.SystemComponents.Contracts
 		void Delete(string path);
 
 		/// <summary>
+		/// Indicates whether the item at the given path exists, be it a file or a directory.
+		/// </summary>
+		bool Exists(string path);
+
+		/// <summary>
+		/// Attempts to retrieve the content of the file at the given path. Returns <c>true</c> if successful or <c>false</c> if the file does not exist.
+		/// </summary>
+		bool TryRead(string path, out string content);
+
+		/// <summary>
 		/// Saves the given content as a file under the specified path. If the file doesn't yet exist, it will be created, otherwise overwritten.
 		/// </summary>
 		void Save(string content, string path);

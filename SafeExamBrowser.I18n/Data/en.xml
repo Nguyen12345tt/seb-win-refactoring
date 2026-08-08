@@ -114,6 +114,39 @@
     <Entry key="CredentialsDialog_WirelessNetworkTitle">
         Network Authentication Required
     </Entry>
+    <Entry key="ErrorDialog_CrashMessage">
+        SEB appears to have crashed in a previous session. Please consult the log files for more information.
+    </Entry>
+    <Entry key="ErrorDialog_CrashTitle">
+        Error In Previous Session
+    </Entry>
+    <Entry key="ErrorDialog_IgnoreCrash">
+        Do not show this message again
+    </Entry>
+    <Entry key="ErrorDialog_Ok">
+        OK
+    </Entry>
+    <Entry key="ErrorDialog_SendMail">
+        Send Logs via E-Mail
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartMessage">
+        SEB failed to start a new session! Please consult the log files for more information.
+    </Entry>
+    <Entry key="ErrorDialog_SessionStartTitle">
+        Session Start Error
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownMessage">
+        An unexpected error occurred during the shutdown procedure! Please consult the log files for more information.
+    </Entry>
+    <Entry key="ErrorDialog_ShutdownTitle">
+        Shutdown Error
+    </Entry>
+    <Entry key="ErrorDialog_StartupMessage">
+        An unexpected error occurred during the startup procedure! Please consult the log files for more information.
+    </Entry>
+    <Entry key="ErrorDialog_StartupTitle">
+        Startup Error
+    </Entry>
     <Entry key="ExamSelectionDialog_Cancel">
         Cancel
     </Entry>
@@ -437,24 +470,6 @@
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Service Unavailable
-    </Entry>
-    <Entry key="MessageBox_SessionStartError">
-        SEB failed to start a new session! Please consult the log files for more information.
-    </Entry>
-    <Entry key="MessageBox_SessionStartErrorTitle">
-        Session Start Error
-    </Entry>
-    <Entry key="MessageBox_ShutdownError">
-        An unexpected error occurred during the shutdown procedure! Please consult the log files for more information.
-    </Entry>
-    <Entry key="MessageBox_ShutdownErrorTitle">
-        Shutdown Error
-    </Entry>
-    <Entry key="MessageBox_StartupError">
-        An unexpected error occurred during the startup procedure! Please consult the log files for more information.
-    </Entry>
-    <Entry key="MessageBox_StartupErrorTitle">
-        Startup Error
     </Entry>
     <Entry key="MessageBox_UnexpectedConfigurationError">
         An unexpected error occurred while trying to load configuration resource "%%URI%%"! Please consult the log files for more information.
